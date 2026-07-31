@@ -1,0 +1,15 @@
+{
+   "meta": {
+      "mainPageDescription": "Search, collect and share your movie collection"
+   },
+   "menu": {
+      "about": "About",
+      "movies": "Movies",
+      "tvshows": "TV Shows",
+      "language": "Language",
+      "search": "Search"
+   },
+   "auth": {
+      "signin": "Sign in"
+   }
+}
