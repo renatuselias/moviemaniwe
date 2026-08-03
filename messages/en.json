@@ -10,6 +10,27 @@
       "search": "Search"
    },
    "auth": {
-      "signin": "Sign in"
+      "signIn": "Sign in",
+      "signInWith": "Sign in with:",
+      "logout": "Logout",
+      "library": "Library",
+      "logIn": "Log in",
+      "register": "Register",
+      "email": "Email",
+      "name": "Name",
+      "password": "Password",
+      "namePlaceholder": "Enter your name",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "passwordTip": "Must be at least 8 characters long.",
+      "authDescription": "Discover new movies and manage your movie collection. Create and share your own movie lists with friends and family.",
+      "error": {
+         "INVALID_EMAIL_OR_PASSWORD": "Invalid email or password",
+         "INVALID_EMAIL": "Invalid email",
+         "PASSWORD_TOO_SHORT": "Password too short",
+         "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL": "User already exists. Use another email.",
+         "VALIDATION_ERROR": "Invalid email or password.",
+         "failedSignIn": "Failed to sign in"
+      }
    }
 }

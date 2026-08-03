@@ -1,10 +1,14 @@
 import Link from "next/link";
-import { HeaderClient, MenuList, LanguageSelect } from "@/widgets/header";
 import { SearchIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { AuthModal } from "@/features/auth";
+import { HeaderClient } from "./HeaderClient";
+import { MenuList } from "./MenuList";
+import { LanguageSelect } from "./LanguageSelect";
+import { getAuthSession } from "@/lib/auth/auth-sessions";
+import { UserDropdownMenu } from "./UserDropdownMenu";
 
-export function Header() {
-   const t = useTranslations();
+export async function Header() {
+   const userSession = await getAuthSession();
 
    return (
       <HeaderClient>
@@ -24,7 +28,7 @@ export function Header() {
                   h-4 w-4 max-[350px]:h-5 max-[350px]:w-5"
                />
                <span className="hidden min-[350px]:block select-none">
-                  {t("menu.search")}
+                  search
                </span>
             </button>
             <span className="text-zinc-600 select-none">|</span>
@@ -35,13 +39,11 @@ export function Header() {
             </div>
 
             {/* <span className="hidden sm:block text-zinc-600 select-none">|</span> */}
-            <button
-               className="select-none cursor-pointer text-sm md:text-lg tracking-wide font-medium
-               bg-linear-to-r from-zinc-100 via-zinc-400 to-zinc-600 bg-clip-text text-transparent animate-shimmer
-               hover:scale-110"
-            >
-               {t("auth.signin")}
-            </button>
+            {userSession ? (
+               <UserDropdownMenu user={userSession.user} />
+            ) : (
+               <AuthModal />
+            )}
          </div>
       </HeaderClient>
    );

@@ -10,6 +10,27 @@
       "search": "Поиск"
    },
    "auth": {
-      "signin": "Войти"
+      "signIn": "Войти",
+      "signInWith": "Войти с помощью:",
+      "logout": "Выйти",
+      "library": "Библиотека",
+      "logIn": "Вход",
+      "register": "Регистрация",
+      "email": "Электронная почта",
+      "name": "Имя",
+      "password": "Пароль",
+      "namePlaceholder": "Введите ваше имя",
+      "emailPlaceholder": "Введите ваш email",
+      "passwordPlaceholder": "Введите ваш пароль",
+      "passwordTip": "Пароль должен содержать минимум 8 символов.",
+      "authDescription": "Открывайте для себя новые фильмы и управляйте своей коллекцией. Создавайте и делитесь своими списками фильмов с друзьями и семьей.",
+      "error": {
+         "INVALID_EMAIL_OR_PASSWORD": "Неверный email или пароль",
+         "INVALID_EMAIL": "Некорректный email",
+         "PASSWORD_TOO_SHORT": "Слишком короткий пароль",
+         "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL": "Пользователь уже существует. Используйте другой email.",
+         "VALIDATION_ERROR": "Неверный email или пароль.",
+         "failedSignIn": "Не удалось войти"
+      }
    }
 }

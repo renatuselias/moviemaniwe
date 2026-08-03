@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { MobileMenu } from "@/widgets/mobile-menu";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
+import QueryProvider from "@/lib/providers/QueryProvider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -50,12 +51,14 @@ export default async function RootLayout({
       >
          <body className="min-h-full flex flex-col">
             <NextIntlClientProvider messages={messages}>
-               <div className="flex flex-col min-h-dvh relative">
-                  <Header />
-                  <main className="flex-1 flex flex-col">{children}</main>
-                  <MobileMenu />
-                  {/* <Footer /> */}
-               </div>
+               <QueryProvider>
+                  <div className="flex flex-col min-h-dvh relative">
+                     <Header />
+                     <main className="flex-1 flex flex-col">{children}</main>
+                     <MobileMenu />
+                     {/* <Footer /> */}
+                  </div>
+               </QueryProvider>
             </NextIntlClientProvider>
          </body>
       </html>
