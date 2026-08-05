@@ -1,2 +1,3 @@
 export { AuthModal } from "./ui/AuthModal";
-export { useAuthActions } from "./hooks/useAuthActions";
+export { UserDropdownMenu } from "./ui/UserDropdownMenu";
+export { useAuthActions } from "./model/useAuthActions";

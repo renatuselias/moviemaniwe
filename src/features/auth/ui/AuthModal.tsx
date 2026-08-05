@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+   Dialog,
+   DialogContent,
+   DialogTrigger,
+} from "@/shared/ui/shadcn/ui/dialog";
 import { useTranslations } from "next-intl";
 import { AuthTabs } from "./AuthTabs";
 

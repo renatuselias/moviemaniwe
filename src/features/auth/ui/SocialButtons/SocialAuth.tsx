@@ -1,5 +1,5 @@
 "use client";
-import { useAuthActions } from "@/features/auth";
+import { useAuthActions } from "../../model/useAuthActions";
 import { SocialAuthButton } from "./SocialAuthButton";
 
 export default function SocialAuth() {

@@ -1,5 +1,10 @@
-export default function Home() {
-   return (
-      <div className="flex flex-col items-center justify-center min-h-screen w-full"></div>
-   );
+import { MainPage } from "@/pages/main";
+// import { getDiscoverMovies } from "@/entities/media";
+import { getTrendingMedia } from "@/entities/media";
+
+export default async function Home() {
+   // const data = await getDiscoverMovies("28", "1");
+   const data = await getTrendingMedia();
+
+   return <MainPage media={data.results} />;
 }

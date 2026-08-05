@@ -7,13 +7,18 @@ import {
    CardDescription,
    CardHeader,
    CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+} from "@/shared/ui/shadcn/ui/card";
+import {
+   Tabs,
+   TabsContent,
+   TabsList,
+   TabsTrigger,
+} from "@/shared/ui/shadcn/ui/tabs";
+import { Button } from "@/shared/ui/shadcn/ui/button";
 import { FieldInput } from "./FieldInput";
 import SocialAuth from "./SocialButtons/SocialAuth";
-import { useAuthActions } from "@/features/auth";
-import styles from "@/features/auth/ui/SocialButtons/SocialAuthButton.module.css";
+import { useAuthActions } from "../model/useAuthActions";
+import styles from "./SocialButtons/SocialAuthButton.module.css";
 import { useTranslations } from "next-intl";
 
 interface AuthTabsProps {
@@ -33,8 +38,6 @@ export function AuthTabs({ onSuccess }: AuthTabsProps) {
       email: "",
       password: "",
    });
-
-   const descriptionText = t("authDescription");
 
    const isLoginDisabled =
       !loginValues.email.trim() ||
@@ -87,7 +90,7 @@ export function AuthTabs({ onSuccess }: AuthTabsProps) {
             <Card className="ring-0! w-full! px-2 bg-black!">
                <CardHeader className="px-0!">
                   <CardTitle>{t("logIn")}</CardTitle>
-                  <CardDescription>{descriptionText}</CardDescription>
+                  <CardDescription>{t("loginDescription")}</CardDescription>
                </CardHeader>
                <CardContent className="text-sm text-muted-foreground px-0! w-full!">
                   <form onSubmit={handleSignIn}>
@@ -120,7 +123,7 @@ export function AuthTabs({ onSuccess }: AuthTabsProps) {
             <Card className="ring-0! w-full! px-2 bg-black!">
                <CardHeader className="px-0!">
                   <CardTitle>{t("register")}</CardTitle>
-                  <CardDescription>{descriptionText}</CardDescription>
+                  <CardDescription>{t("registerDescription")}</CardDescription>
                </CardHeader>
                <CardContent className="text-sm text-muted-foreground px-0! w-full!">
                   <form onSubmit={handleSignUp}>

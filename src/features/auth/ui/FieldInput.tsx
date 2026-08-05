@@ -4,8 +4,8 @@ import {
    FieldGroup,
    FieldLabel,
    FieldSet,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+} from "@/shared/ui/shadcn/ui/field";
+import { Input } from "@/shared/ui/shadcn/ui/input";
 import { useTranslations } from "next-intl";
 interface FieldInputProps {
    isRegister?: boolean;

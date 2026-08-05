@@ -2,10 +2,10 @@ import Link from "next/link";
 import { SearchIcon } from "lucide-react";
 import { AuthModal } from "@/features/auth";
 import { HeaderClient } from "./HeaderClient";
-import { MenuList } from "./MenuList";
-import { LanguageSelect } from "./LanguageSelect";
-import { getAuthSession } from "@/lib/auth/auth-sessions";
-import { UserDropdownMenu } from "./UserDropdownMenu";
+import { HeaderNav } from "./HeaderNav";
+import { LanguageSelect } from "@/features/select-language";
+import { getAuthSession } from "@/shared/lib/auth/auth-sessions";
+import { UserDropdownMenu } from "@/features/auth";
 
 export async function Header() {
    const userSession = await getAuthSession();
@@ -32,7 +32,7 @@ export async function Header() {
                </span>
             </button>
             <span className="text-zinc-600 select-none">|</span>
-            <MenuList />
+            <HeaderNav />
             {/* <span className="hidden sm:block text-zinc-600 select-none">|</span> */}
             <div className="hidden sm:block">
                <LanguageSelect />

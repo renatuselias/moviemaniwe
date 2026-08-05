@@ -3,11 +3,11 @@ import { Montserrat, Geist } from "next/font/google";
 import "@/app/globals.css";
 
 import { Header } from "@/widgets/header";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { MobileMenu } from "@/widgets/mobile-menu";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
-import QueryProvider from "@/lib/providers/QueryProvider";
+import QueryProvider from "@/shared/lib/providers/QueryProvider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 

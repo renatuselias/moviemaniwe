@@ -180,4 +180,49 @@ li:hover {
    );
    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
 }
-/* shimmer animation END */
+/* END of shimmer animation */
+
+/* animation for hero image MainPage */
+@keyframes kenburns {
+   0% {
+      transform: scale(1) translateX(0);
+   }
+
+   100% {
+      transform: scale(1.2) translateX(-2%);
+   }
+}
+
+.animate-kenburns {
+   will-change: transform;
+   animation: kenburns 20s ease-in-out infinite alternate;
+}
+/* END of animation for hero image MainPage */
+
+/* MainPage Details section appearance from bottom */
+@keyframes fadeInUp {
+   from {
+      opacity: 0;
+      transform: translateY(20px);
+   }
+
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+/* END of MainPage Details section appearance from bottom */
+
+/* animation for navigation progress bar */
+
+@keyframes progressScaleX {
+   0% {
+      transform: scaleX(0);
+   }
+
+   100% {
+      transform: scaleX(1);
+   }
+}
+
+/* END animation for navigation progress bar */

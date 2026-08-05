@@ -5,9 +5,9 @@ import { usePathname } from "@/i18n/navigation";
 import { ChevronUp, ChevronDown } from "lucide-react";
 
 import { useTranslations } from "next-intl";
-import { NAV_ITEMS } from "@/config/navigation";
+import { NAV_ITEMS } from "@/shared/config/navigation";
 import { useState } from "react";
-import { LanguageDropdown } from "./LanguageDropdown";
+import { LanguageDropdown } from "@/features/select-language";
 
 export function MobileMenu() {
    const pathname = usePathname();
