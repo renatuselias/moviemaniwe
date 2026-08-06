@@ -43,7 +43,7 @@
    "mediaDetail": {
       "hour": "г",
       "minute": "хв",
-      "season": "сезон"
+      "season": "{count, plural, =1 {# сезон} one {# сезон} few {# сезони} many {# сезонів} other {# сезонів}}"
    },
    "genres": {
       "Action": "Бойовик",
@@ -73,5 +73,13 @@
       "Soap": "Мильна опера",
       "Talk": "Ток-шоу",
       "War & Politics": "Війна та політика"
+   },
+   "libraryButtons": {
+      "watched": "У переглянутому",
+      "addToWatched": "Додати до переглянутого",
+      "wishlist": "У списку бажань",
+      "addToWishlist": "Додати до списку бажань",
+      "favorite": "У списку обраного",
+      "addToFavorite": "Додати до обраного"
    }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { LogOut, Library } from "lucide-react";
 import { useAuthActions } from "@/features/auth";
 import { useTranslations } from "next-intl";

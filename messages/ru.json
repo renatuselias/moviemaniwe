@@ -43,7 +43,7 @@
    "mediaDetail": {
       "hour": "ч",
       "minute": "мин",
-      "season": "сезон"
+      "season": "{count, plural, =1 {# сезон} one {# сезон} few {# сезона} many {# сезонов} other {# сезонов}}"
    },
    "genres": {
       "Action": "Боевик",
@@ -73,5 +73,13 @@
       "Soap": "Мыльная опера",
       "Talk": "Ток-шоу",
       "War & Politics": "Война и политика"
+   },
+   "libraryButtons": {
+      "watched": "В просмотренном",
+      "addToWatched": "Добавить в просмотренное",
+      "wishlist": "В списке желаний",
+      "addToWishlist": "Добавить в список желаний",
+      "favorite": "В избранном",
+      "addToFavorite": "Добавить в избранное"
    }
 }

@@ -40,7 +40,7 @@
    "mediaDetail": {
       "hour": "h",
       "minute": "m",
-      "season": "season"
+      "season": "{count, plural, =1 {# season} one {# season} other {# seasons}}"
    },
    "genres": {
       "Action": "Action",
@@ -70,5 +70,13 @@
       "Soap": "Soap",
       "Talk": "Talk",
       "War & Politics": "War & Politics"
+   },
+   "libraryButtons": {
+      "watched": "In watched list",
+      "addToWatched": "Add to watched list",
+      "wishlist": "In wishlist",
+      "addToWishlist": "Add to wishlist",
+      "favorite": "In favorite list",
+      "addToFavorite": "Add to favorite list"
    }
 }

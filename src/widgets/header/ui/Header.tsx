@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { SearchIcon } from "lucide-react";
 import { AuthModal } from "@/features/auth";
 import { HeaderClient } from "./HeaderClient";
