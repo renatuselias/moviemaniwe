@@ -1,93 +1,106 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
-import { useIsMobile } from "@/shared/lib/hooks/useWindowSize";
+import { useMemo } from "react";
+import { useInView } from "react-intersection-observer";
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
+import { MediaSlide, useNowPlayingMovies } from "@/entities/media";
+import { ContentTitle } from "@/shared/components";
 import { useTMDBImagePath } from "@/shared/lib/hooks/useTMDBImagePath";
-import BackgroundImage from "@/shared/ui/components/BackgroundImage";
-import { MediaDetails, NormalizedMedia } from "@/entities/media";
-import { CarouselNavigation } from "./CarouselNavigation";
-import { LibraryControlButtons } from "@/features/library-controls";
-import { Link } from "@/i18n/navigation";
-import { InfoIcon } from "lucide-react";
+import {
+   Carousel,
+   CarouselContent,
+   CarouselItem,
+   CarouselNext,
+   CarouselPrevious,
+} from "@/shared/components/ui/carousel";
+import { Skeleton } from "@/shared/components/ui/skeleton";
 
-export function MediaCarousel({ media }: { media: NormalizedMedia[] }) {
-   const t = useTranslations("loaders");
+interface MediaCarouselProps {
+   title: string;
+   subtitle: string;
+}
 
-   const sliderTime = 10000;
+export function MediaCarousel({ title, subtitle }: MediaCarouselProps) {
+   const { ref, inView } = useInView({
+      triggerOnce: true,
+      rootMargin: "400px 0px",
+   });
 
-   const isMobile = useIsMobile();
-
-   const [currentSlide, setCurrentSlide] = useState(0);
-
-   const listRef = useRef<HTMLDivElement>(null);
-
-   // Scroll active item into view
-   useEffect(() => {
-      const activeItem = listRef.current?.children[currentSlide] as HTMLElement;
-      if (activeItem) {
-         activeItem.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
-   }, [currentSlide]);
-
-   useEffect(() => {
-      if (!media || media.length === 0) return;
-      const timer = setInterval(() => {
-         setCurrentSlide((prev) => (prev + 1) % media.length);
-      }, sliderTime);
-      return () => clearInterval(timer);
-   }, [media, currentSlide]);
-
-   const currentMovie = media[currentSlide];
-
-   const { id, title, rating, posterPath, backdropPath, mediaType } =
-      currentMovie;
-
+   const { data: movies, isLoading } = useNowPlayingMovies(inView);
    const tmdbImgPath = useTMDBImagePath();
-   const backdrop = `${tmdbImgPath}${isMobile ? posterPath : backdropPath}`;
-   const mediaHref = `/${mediaType === "tv" ? "tvshow" : mediaType}/${id}`;
+
+   const wheelPlugin = useMemo(
+      () => WheelGesturesPlugin({ forceWheelAxis: "x" }),
+      [],
+   );
 
    return (
-      <div className="flex-1 min-h-[90vh] sm:min-h-screen relative flex flex-col justify-end bg-black lg:bg-[#010101]">
-         <BackgroundImage
-            src={backdrop}
-            alt={title}
-            imageKey={id}
-            loadingText={t("loadingPoster")}
+      <section
+         ref={ref}
+         className="w-full flex flex-col gap-5 sm:gap-10"
+      >
+         <ContentTitle
+            title={title}
+            subtitle={subtitle}
          />
 
-         <div className="relative z-30 w-full px-8 pt-16 sm:pt-20 lg:pt-24 pb-4 sm:pb-6 md:pb-8 flex flex-col-reverse sm:flex-row items-start sm:items-end justify-end sm:justify-between gap-4 sm:gap-10 mt-auto bg-linear-to-t from-black via-black/90 to-transparent sm:bg-none overflow-hidden">
-            <div className="flex flex-col w-full">
-               <MediaDetails
-                  id={id}
-                  title={title}
-                  rating={rating}
-                  mediaType={mediaType}
-               >
-                  {/* Library control buttons */}
-                  <div className="flex gap-3 sm:gap-5 flex-wrap-reverse items-center">
-                     <Link
-                        href={mediaHref}
-                        className="flex transition-all duration-700 bg-transparent items-center gap-1 text-sm! sm:text-md! py-2! px-3! rounded-sm! text-zinc-400 border border-white/10 hover:bg-transparent hover:text-zinc-300 hover:scale-105"
-                     >
-                        <span className="select-none">Discover</span>
-                        <InfoIcon
-                           strokeWidth={1.5}
-                           size={17}
-                        />
-                     </Link>
-                     <LibraryControlButtons />
-                  </div>
-               </MediaDetails>
-            </div>
+         {isLoading || !inView ? (
+            <div className="w-full flex gap-4">
+               {[0, 1].map((index) => (
+                  <div
+                     key={index}
+                     className={`w-full flex-col gap-3 ${
+                        index === 1 ? "hidden sm:flex" : "flex"
+                     }`}
+                  >
+                     <Skeleton className="w-full aspect-video" />
+                     <Skeleton className="w-1/2 h-5 rounded-sm" />
 
-            <CarouselNavigation
-               media={media}
-               sliderTime={sliderTime}
-               currentSlide={currentSlide}
-               setCurrentSlide={setCurrentSlide}
-            />
-         </div>
-      </div>
+                     <div className="flex gap-2">
+                        <Skeleton className="w-15 h-5 rounded-sm" />
+                        <Skeleton className="w-15 h-5 rounded-sm" />
+                        <Skeleton className="w-2/5 h-5 rounded-sm" />
+                     </div>
+                     <div className="flex gap-2 items-center">
+                        <Skeleton className="w-12 h-5 rounded-sm" />
+                        <Skeleton className="w-30 h-7 rounded-sm" />
+                        <Skeleton className="w-2/5 h-5 rounded-sm" />
+                     </div>
+
+                     <Skeleton className="w-20 h-5 rounded-sm" />
+                  </div>
+               ))}
+            </div>
+         ) : movies && movies.length > 0 ? (
+            <Carousel
+               opts={{
+                  align: "start",
+                  loop: true,
+                  watchDrag: true,
+               }}
+               className="w-full relative"
+               plugins={[wheelPlugin]}
+            >
+               <CarouselContent className="-ml-4">
+                  {movies.map((movie) => (
+                     <CarouselItem
+                        key={movie.id}
+                        className="basis-full sm:basis-1/2 pl-4"
+                     >
+                        <MediaSlide
+                           movie={movie}
+                           tmdbImgPath={tmdbImgPath}
+                        />
+                     </CarouselItem>
+                  ))}
+               </CarouselContent>
+
+               <div className="flex gap-2 absolute -top-16 sm:-top-21 right-0">
+                  <CarouselPrevious className="static translate-y-0 rounded-xs cursor-pointer max-[380px]:w-8 max-[380px]:h-8 w-10 h-10" />
+                  <CarouselNext className="static translate-y-0 rounded-xs cursor-pointer max-[380px]:w-8 max-[380px]:h-8 w-10 h-10" />
+               </div>
+            </Carousel>
+         ) : null}
+      </section>
    );
 }

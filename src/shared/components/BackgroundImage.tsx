@@ -15,7 +15,7 @@ interface BackgroundImageProps {
 
 const globalLoadedImages = new Set<string>();
 
-export default function BackgroundImage({
+export function BackgroundImage({
    src,
    alt,
    imageKey,

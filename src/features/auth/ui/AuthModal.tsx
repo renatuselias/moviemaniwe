@@ -5,7 +5,7 @@ import {
    Dialog,
    DialogContent,
    DialogTrigger,
-} from "@/shared/ui/shadcn/ui/dialog";
+} from "@/shared/components/ui/dialog";
 import { useTranslations } from "next-intl";
 import { AuthTabs } from "./AuthTabs";
 

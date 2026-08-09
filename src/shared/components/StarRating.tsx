@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 
-export default function StarRating({ text }: { text: string }) {
+export function StarRating({ text }: { text: string }) {
    return (
       <div
          className={`flex w-fit items-center gap-1.5 px-1.5 py-0.5 rounded-sm bg-white/10 text-yellow-400`}

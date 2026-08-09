@@ -12,12 +12,12 @@ import {
    DropdownMenuItem,
    DropdownMenuSeparator,
    DropdownMenuTrigger,
-} from "@/shared/ui/shadcn/ui/dropdown-menu";
+} from "@/shared/components/ui/dropdown-menu";
 import {
    Avatar,
    AvatarFallback,
    AvatarImage,
-} from "@/shared/ui/shadcn/ui/avatar";
+} from "@/shared/components/ui/avatar";
 
 interface UserDropdownMenuProps {
    user: {

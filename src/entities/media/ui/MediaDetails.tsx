@@ -4,10 +4,10 @@ import { useState, useEffect, ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { getMediaExtras } from "../api/getMediaExtras";
-import { Skeleton } from "@/shared/ui/shadcn/ui/skeleton";
+import { Skeleton } from "@/shared/components/ui/skeleton";
 import { useTranslations } from "next-intl";
-import StarRating from "@/shared/ui/components/StarRating";
-import { formatRuntime } from "@/shared/lib/utils/format-runtime";
+import { FormattedRuntime, StarRating } from "@/shared/components";
+import { formatDate } from "@/shared/lib/format";
 import { ALL_GENRES } from "@/shared/config/tmdb-genres";
 
 interface MediaDetailsProps {
@@ -89,6 +89,10 @@ export function MediaDetails({
                   <Skeleton className="h-4 w-14 bg-white/20 rounded-sm" />
                   <span className="text-white/20">|</span>
                   <Skeleton className="h-4 w-14 bg-white/20 rounded-sm" />
+               </div>
+               <div className="flex items-center gap-2 sm:gap-3 mt-3 sm:mt-4">
+                  <Skeleton className="h-7 w-1/5 bg-white/20 rounded-sm" />
+                  <Skeleton className="h-6 w-1/3 bg-white/20 rounded-sm" />
                </div>
             </div>
          ) : (
@@ -172,21 +176,13 @@ export function MediaDetails({
                         </>
                      )}
                      {/* release date */}
-                     {release_date && <span>{release_date.split("-")[0]}</span>}
+                     {release_date && <span>{formatDate(release_date)}</span>}
 
                      {/* if movie - runtime */}
                      {mediaType === "movie" && runtime ? (
                         <>
                            <span className="text-white/20">|</span>
-                           <span>
-                              {(() => {
-                                 const { hour, minute } =
-                                    formatRuntime(runtime);
-                                 return hour > 0
-                                    ? `${hour}${t("mediaDetail.hour")} ${minute}${t("mediaDetail.minute")}`
-                                    : `${minute}${t("mediaDetail.minute")}`;
-                              })()}
-                           </span>
+                           <FormattedRuntime runtime={runtime} />
                         </>
                      ) : null}
 

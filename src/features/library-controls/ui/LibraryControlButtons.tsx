@@ -7,7 +7,7 @@ import {
    TooltipContent,
    TooltipProvider,
    TooltipTrigger,
-} from "@/shared/ui/shadcn/ui/tooltip";
+} from "@/shared/components/ui/tooltip";
 import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/utils";
 

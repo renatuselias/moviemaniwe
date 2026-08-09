@@ -1,5 +1,20 @@
 import { BaseMedia } from "@/shared/types";
 
+interface MovieCast {
+   adult: boolean;
+   cast_id: number;
+   character: string;
+   credit_id: string;
+   gender: number;
+   id: number;
+   known_for_department: string;
+   name: string;
+   order: number;
+   original_name: string;
+   popularity: number;
+   profile_path: string;
+}
+
 export interface Movie extends BaseMedia {
    media_type: "movie";
    title: string;
@@ -19,6 +34,9 @@ export interface Movie extends BaseMedia {
    }[];
    budget?: number;
    revenue?: number;
+   cast: MovieCast[];
+   trailerKey?: string;
+   backdrops?: { file_path: string }[];
 }
 
 export interface TvSeries extends BaseMedia {
@@ -63,4 +81,6 @@ export interface NormalizedMedia {
    mediaType: "movie" | "tv";
    overview?: string;
    rating: number;
+   // cast?: CastMember[];
+   // trailerUrl?: string | null;
 }

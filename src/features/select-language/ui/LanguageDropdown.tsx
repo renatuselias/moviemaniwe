@@ -6,7 +6,7 @@ import {
    DropdownMenuLabel,
    DropdownMenuSeparator,
    DropdownMenuGroup,
-} from "@/shared/ui/shadcn/ui/dropdown-menu";
+} from "@/shared/components/ui/dropdown-menu";
 import { Globe2, Check } from "lucide-react";
 import { routing, languageNames } from "@/i18n/routing";
 import { useTranslations } from "next-intl";

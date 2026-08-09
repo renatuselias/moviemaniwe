@@ -1,4 +1,4 @@
-export interface Video {
+export interface TMDBVideo {
    id: string;
    iso_639_1: string;
    iso_3166_1: string;
@@ -6,7 +6,15 @@ export interface Video {
    name: string;
    site: string;
    size: number;
-   type: string;
+   type:
+      | "Trailer"
+      | "Teaser"
+      | "Clip"
+      | "Featurette"
+      | "Behind the Scenes"
+      | "Bolloper";
+   official: boolean;
+   published_at: string;
 }
 
 export interface TMDBImage {
@@ -37,6 +45,6 @@ export interface BaseMedia {
    genres: { id: number; name: string }[];
    tagline?: string;
    origin_country?: string[];
-   videos?: { results: Video[] };
+   videos?: { results: TMDBVideo[] };
    images?: TMDBImages;
 }

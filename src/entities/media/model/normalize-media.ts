@@ -13,5 +13,7 @@ export function normalizeMedia(item: MediaItem): NormalizedMedia {
       mediaType: item.media_type,
       overview: item.overview,
       rating: item.vote_average,
+      // cast: item.cast,
+      // trailerUrl: item.trailerUrl,
    };
 }

@@ -151,7 +151,7 @@ li:hover {
    color: var(--color-zinc-100);
 }
 
-/* shimmer animation for header logo title, sign in button */
+/* shimmer animation for header logo title, for STICK of sections now playing, trending etc */
 @keyframes shimmer {
    0% {
       background-position: -200% center;
@@ -180,6 +180,32 @@ li:hover {
    );
    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
 }
+
+@keyframes shimmerstick {
+   0% {
+      background-position: 0% 0%;
+   }
+   100% {
+      background-position: 0% -200%;
+   }
+}
+
+.animate-shimmer-stick {
+   background-size: 100% 200%;
+
+   animation: shimmerstick 2s linear infinite;
+   background-image: linear-gradient(
+      to bottom,
+      #f4f4f5 0%,
+      #a1a1aa 20%,
+      #ffffff 40%,
+      #ffffff 60%,
+      #a1a1aa 80%,
+      #f4f4f5 100%
+   );
+   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+}
+
 /* END of shimmer animation */
 
 /* animation for hero image MainPage */
@@ -226,3 +252,17 @@ li:hover {
 }
 
 /* END animation for navigation progress bar */
+
+@keyframes verticalMarquee {
+   0% {
+      transform: translate3d(0, 0%, 0);
+   }
+   100% {
+      transform: translate3d(0, -50%, 0);
+   }
+}
+
+.animate-vertical-marquee {
+   animation: verticalMarquee 3s linear infinite;
+   will-change: transform;
+}

@@ -7,14 +7,14 @@ import {
    CardDescription,
    CardHeader,
    CardTitle,
-} from "@/shared/ui/shadcn/ui/card";
+} from "@/shared/components/ui/card";
 import {
    Tabs,
    TabsContent,
    TabsList,
    TabsTrigger,
-} from "@/shared/ui/shadcn/ui/tabs";
-import { Button } from "@/shared/ui/shadcn/ui/button";
+} from "@/shared/components/ui/tabs";
+import { Button } from "@/shared/components/ui/button";
 import { FieldInput } from "./FieldInput";
 import SocialAuth from "./SocialButtons/SocialAuth";
 import { useAuthActions } from "../model/useAuthActions";

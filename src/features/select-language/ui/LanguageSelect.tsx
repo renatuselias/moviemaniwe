@@ -10,7 +10,7 @@ import {
    SelectLabel,
    SelectTrigger,
    SelectValue,
-} from "@/shared/ui/shadcn/ui/select";
+} from "@/shared/components/ui/select";
 import { Globe } from "lucide-react";
 import { languageNames } from "@/i18n/routing";
 import { useLanguage } from "../model/useLanguage";

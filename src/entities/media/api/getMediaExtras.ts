@@ -17,7 +17,7 @@ export async function getMediaExtras(
       {
          language: tmdbLocale,
          append_to_response: "images",
-         include_image_language: `${tmdbLocale},null,en`,
+         include_image_language: `${tmdbLocale},null`,
       },
       CacheConfig.LISTS,
    );

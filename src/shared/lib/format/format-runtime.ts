@@ -1,5 +1,5 @@
-export const formatRuntime = (minutes: number) => {
+export function formatRuntime(minutes: number) {
    const h = Math.floor(minutes / 60);
    const m = minutes % 60;
    return { hour: h, minute: m };
-};
+}
