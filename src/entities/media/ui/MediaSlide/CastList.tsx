@@ -4,45 +4,61 @@ import {
    AvatarFallback,
    AvatarImage,
 } from "@/shared/components/ui/avatar";
-
-interface CastMember {
-   id: number;
-   name: string;
-   profile_path?: string | null;
-}
+import { useTranslations } from "next-intl";
+import { CreatedBy } from "../../model/types";
 
 interface MediaCastListProps {
-   cast?: CastMember[];
+   members: CreatedBy[];
    tmdbImgPath: string;
+   listNum?: number;
+   showList?: boolean;
+   avatarsCount?: number;
+   avatarSize?: number;
+   type: "creators" | "actors";
 }
 
-export function CastList({ cast = [], tmdbImgPath }: MediaCastListProps) {
-   if (!cast.length) return null;
+export function CastList({
+   members = [],
+   tmdbImgPath,
+   listNum = 2,
+   showList = true,
+   avatarsCount = 5,
+   avatarSize = 7,
+   type = "actors",
+}: MediaCastListProps) {
+   const t = useTranslations("mediaDetail");
 
-   const topCast = cast.slice(0, 5);
-   const mainNames = cast.slice(0, 2);
+   if (!members.length) return null;
+
+   const topCast = members.slice(0, avatarsCount);
+   const mainNames = members.slice(0, listNum);
 
    return (
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 flex-wrap">
          <span className="shrink-0 tracking-tight text-[10px] font-extralight text-muted-foreground uppercase">
-            Starring
+            {t(type, {
+               count: topCast.length,
+            })}
          </span>
 
          {/* Avatars */}
-         <ul className="shrink-0 flex items-center -space-x-2 overflow-hidden">
+
+         <ul className="shrink-0 flex items-center -space-x-1 flex-wrap overflow-hidden">
             {topCast.map((actor) => {
                const avatarUrl = actor.profile_path
                   ? `${tmdbImgPath}${actor.profile_path}`
                   : undefined;
 
-               return (
+               return avatarUrl ? (
                   <li key={actor.id}>
                      <Link
                         href={`/person/${actor.id}`}
                         className="block transition-transform hover:scale-110 hover:z-10 relative"
                         title={actor.name}
                      >
-                        <Avatar className="h-7 w-7 border border-background shrink-0">
+                        <Avatar
+                           className={`h-${avatarSize} w-${avatarSize} border border-background shrink-0`}
+                        >
                            <AvatarImage
                               src={avatarUrl}
                               alt={actor.name || "Actor"}
@@ -56,31 +72,35 @@ export function CastList({ cast = [], tmdbImgPath }: MediaCastListProps) {
                         </Avatar>
                      </Link>
                   </li>
-               );
+               ) : null;
             })}
          </ul>
 
          {/* Names list */}
-         <div className="text-zinc-400 text-sm truncate min-w-0">
-            {mainNames.map((act, index) => {
-               const isLast = index === mainNames.length - 1;
-               return (
-                  <span key={act.id}>
-                     <Link
-                        href={`/person/${act.id}`}
-                        className="hover:underline hover:text-zinc-300 transition-colors"
-                     >
-                        {act.name}
-                     </Link>
-                     {!isLast ? (
-                        <span className="mr-1">,</span>
-                     ) : (
-                        cast.length > 2 && <span className="ml-1">& more</span>
-                     )}
-                  </span>
-               );
-            })}
-         </div>
+         {showList && (
+            <div className="text-zinc-400 text-sm truncate min-w-0 text-wrap">
+               {mainNames.map((act, index) => {
+                  const isLast = index === mainNames.length - 1;
+                  return (
+                     <span key={act.id}>
+                        <Link
+                           href={`/person/${act.id}`}
+                           className="hover:underline hover:text-zinc-300 transition-colors"
+                        >
+                           {act.name}
+                        </Link>
+                        {!isLast ? (
+                           <span className="mr-1">,</span>
+                        ) : (
+                           members.length > 2 && (
+                              <span className="ml-1">{t("moreCrews")}</span>
+                           )
+                        )}
+                     </span>
+                  );
+               })}
+            </div>
+         )}
       </div>
    );
 }

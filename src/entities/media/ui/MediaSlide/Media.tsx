@@ -10,7 +10,7 @@ interface MediaCardMediaProps {
    title: string;
    backdropUrl: string | null;
    carouselImages: string[];
-   trailerKey?: string;
+   trailerKey: string;
    tmdbImgPath: string;
 }
 
@@ -53,7 +53,7 @@ export function Media({
                fill
                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                onLoad={() => setIsLoaded(true)}
-               className={`object-cover transition-all duration-700 ease-in-out ${
+               className={`object-cover transition-all duration-700 select-none ease-in-out ${
                   isLoaded ? "opacity-100" : "opacity-0"
                } ${
                   isHovered && !showTrailer

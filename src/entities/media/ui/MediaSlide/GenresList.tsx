@@ -3,7 +3,7 @@ import { MOVIE_GENRES } from "@/shared/config/tmdb-genres";
 import { useTranslations } from "next-intl";
 
 interface MediaGenresListProps {
-   genreIds?: number[];
+   genreIds: number[];
 }
 
 export function GenresList({ genreIds = [] }: MediaGenresListProps) {
@@ -16,7 +16,7 @@ export function GenresList({ genreIds = [] }: MediaGenresListProps) {
    if (!validGenres.length) return null;
 
    return (
-      <p className="truncate min-w-0 text-sm text-muted-foreground">
+      <div className="truncate min-w-0 text-sm text-muted-foreground flex flex-wrap">
          {validGenres.map((genre, index) => {
             const isLast = index === validGenres.length - 1;
             return (
@@ -34,6 +34,6 @@ export function GenresList({ genreIds = [] }: MediaGenresListProps) {
                </span>
             );
          })}
-      </p>
+      </div>
    );
 }

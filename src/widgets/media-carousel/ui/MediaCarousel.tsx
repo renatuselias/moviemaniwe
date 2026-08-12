@@ -88,7 +88,7 @@ export function MediaCarousel({ title, subtitle }: MediaCarouselProps) {
                         className="basis-full sm:basis-1/2 pl-4"
                      >
                         <MediaSlide
-                           movie={movie}
+                           media={movie}
                            tmdbImgPath={tmdbImgPath}
                         />
                      </CarouselItem>

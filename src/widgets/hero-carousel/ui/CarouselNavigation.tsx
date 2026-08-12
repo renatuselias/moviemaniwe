@@ -1,8 +1,8 @@
-import { NormalizedMedia } from "@/entities/media";
+import { TrendingMedia } from "@/entities/media/model/types";
 import { cn } from "@/shared/lib/utils";
 
 interface CarouselNavigationProps {
-   media: NormalizedMedia[];
+   media: TrendingMedia[];
    currentSlide: number;
    setCurrentSlide: (value: number) => void;
    sliderTime: number;

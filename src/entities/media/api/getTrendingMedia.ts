@@ -2,9 +2,7 @@ import { tmdbFetch } from "@/shared/api/tmdb/tmdb-api";
 import { TMDB_LANGUAGES } from "@/shared/config/tmdb-languages";
 import { CacheConfig } from "@/shared/config/cache";
 import { getLocale } from "next-intl/server";
-
-import { MediaItem, NormalizedMedia } from "../model/types";
-import { normalizeMedia } from "../model/normalize-media";
+import { TMDBTrendingMedia } from "@/shared/types";
 
 export async function getTrendingMedia(timeWindow: "day" | "week" = "day") {
    const locale = await getLocale();
@@ -21,14 +19,21 @@ export async function getTrendingMedia(timeWindow: "day" | "week" = "day") {
    }
 
    // exclude persons (actor, directors, writers..)
-   const results: NormalizedMedia[] = data.results
-      .filter((item: unknown): item is MediaItem => {
-         if (typeof item !== "object" || item === null) return false;
-
-         const mediaType = (item as Record<string, unknown>).media_type;
-         return mediaType === "movie" || mediaType === "tv";
-      })
-      .map(normalizeMedia);
+   const results = (data.results as TMDBTrendingMedia[])
+      .filter(
+         (item): item is TMDBTrendingMedia =>
+            item?.media_type === "movie" || item?.media_type === "tv",
+      )
+      .map((media) => {
+         const isMovie = media.media_type === "movie";
+         return {
+            id: media.id,
+            mediaType: media.media_type,
+            title: (isMovie ? media.title : media.name) ?? "No name",
+            backdropPath: media.backdrop_path,
+            posterPath: media.poster_path,
+         };
+      });
 
    return { results };
 }

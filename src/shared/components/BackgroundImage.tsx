@@ -6,11 +6,11 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 interface BackgroundImageProps {
-   src: string;
+   src: string | null;
    alt: string;
    imageKey?: string | number;
    loadingText?: string;
-   animation?: boolean;
+   aspectRatio?: string;
 }
 
 const globalLoadedImages = new Set<string>();
@@ -20,34 +20,45 @@ export function BackgroundImage({
    alt,
    imageKey,
    loadingText = "Loading...",
+   aspectRatio,
 }: BackgroundImageProps) {
    const t = useTranslations();
 
+   const isSrc = Boolean(src && !src.includes("null"));
+   const validSrc = isSrc ? (src as string) : null;
+
    const [prevSrc, setPrevSrc] = useState(src);
-   const [isLoading, setIsLoading] = useState(
-      () => !globalLoadedImages.has(src),
+   const [isLoading, setIsLoading] = useState(() =>
+      validSrc ? !globalLoadedImages.has(validSrc) : false,
    );
 
    if (prevSrc !== src) {
       setPrevSrc(src);
-      setIsLoading(!globalLoadedImages.has(src));
+      setIsLoading(validSrc ? !globalLoadedImages.has(validSrc) : false);
    }
 
    const handleImageLoad = () => {
-      globalLoadedImages.add(src);
+      if (validSrc) {
+         globalLoadedImages.add(validSrc);
+      }
       setIsLoading(false);
    };
 
-   const isSrc = Boolean(src && !src.includes("null"));
+   const containerClasses = aspectRatio
+      ? `relative w-full overflow-hidden select-none shrink-0 bg-black`
+      : `absolute inset-0 bg-black overflow-hidden pointer-events-none z-0`;
 
    return (
-      <div className="absolute inset-x-0 top-0 h-[75dvh] lg:h-full lg:inset-0 bg-black lg:bg-transparent overflow-hidden pointer-events-none z-0">
-         <div className="relative h-full w-full">
+      <div
+         className={containerClasses}
+         style={aspectRatio ? { aspectRatio } : undefined}
+      >
+         <div className="relative h-full w-full isolate transform-gpu">
             {/* Pulsing Loader */}
             <AnimatePresence mode="wait">
-               {isLoading && isSrc && (
+               {isLoading && validSrc && (
                   <motion.div
-                     key={`loader-${src}`}
+                     key={`loader-${validSrc}`}
                      initial={{ opacity: 0 }}
                      animate={{ opacity: 1 }}
                      exit={{ opacity: 0 }}
@@ -68,29 +79,33 @@ export function BackgroundImage({
                )}
             </AnimatePresence>
 
-            {/* Image */}
+            {/* Image (z-0) */}
             <AnimatePresence mode="popLayout">
                <motion.div
-                  key={imageKey || src}
+                  key={imageKey || validSrc || "no-src"}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 1.5, ease: "easeInOut" }}
-                  className="absolute inset-0"
+                  className="absolute inset-0 z-0 transform-gpu backface-hidden"
                >
-                  <Image
-                     src={src}
-                     alt={alt}
-                     fill
-                     priority={true}
-                     quality={90}
-                     className="object-cover select-none object-top animate-kenburns"
-                     sizes="100vw"
-                     draggable={false}
-                     onLoad={handleImageLoad}
-                  />
-
-                  {!isSrc && (
+                  {validSrc ? (
+                     <Image
+                        src={validSrc}
+                        alt={alt}
+                        fill
+                        priority={true}
+                        quality={90}
+                        className="object-cover select-none object-top animate-kenburns"
+                        sizes={
+                           aspectRatio
+                              ? "(max-width: 640px) 92vw, 50vw"
+                              : "100vw"
+                        }
+                        draggable={false}
+                        onLoad={handleImageLoad}
+                     />
+                  ) : (
                      <div className="absolute inset-0 flex items-center justify-center text-white/60 text-xl tracking-widest select-none font-bold bg-black/70">
                         {t("common.noBackground")}
                      </div>
@@ -98,9 +113,8 @@ export function BackgroundImage({
                </motion.div>
             </AnimatePresence>
 
-            {/* Optimized Overlay System */}
-            <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-black/20 lg:from-[#010101] z-10" />
-            <div className="absolute inset-0 bg-linear-to-l from-black/60 via-transparent to-transparent lg:via-40% z-10" />
+            <div className="absolute inset-x-0 -bottom-0.5 h-[calc(75%+2px)] bg-linear-to-t from-black via-black/90 via-30% to-transparent z-20 pointer-events-none scale-[1.01] transform-gpu" />
+            <div className="absolute inset-0 bg-linear-to-r from-black/60 via-transparent to-transparent z-20 pointer-events-none" />
          </div>
       </div>
    );

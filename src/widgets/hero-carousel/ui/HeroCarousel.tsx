@@ -5,13 +5,14 @@ import { useTranslations } from "next-intl";
 import { useIsMobile } from "@/shared/lib/hooks/useWindowSize";
 import { useTMDBImagePath } from "@/shared/lib/hooks/useTMDBImagePath";
 import { BackgroundImage } from "@/shared/components";
-import { MediaDetails, NormalizedMedia } from "@/entities/media";
+import { MediaDetails, useGetExtras } from "@/entities/media";
 import { CarouselNavigation } from "./CarouselNavigation";
 import { LibraryControlButtons } from "@/features/library-controls";
 import { Link } from "@/i18n/navigation";
 import { InfoIcon } from "lucide-react";
+import { TrendingMedia } from "@/entities/media/model/types";
 
-export function HeroCarousel({ media }: { media: NormalizedMedia[] }) {
+export function HeroCarousel({ media }: { media: TrendingMedia[] }) {
    const t = useTranslations("loaders");
 
    const sliderTime = 10000;
@@ -40,29 +41,43 @@ export function HeroCarousel({ media }: { media: NormalizedMedia[] }) {
 
    const currentMovie = media[currentSlide];
 
-   const { id, title, rating, posterPath, backdropPath, mediaType } =
-      currentMovie;
+   const {
+      id: mediaId,
+      title,
+      posterPath,
+      backdropPath,
+      mediaType,
+   } = currentMovie;
+
+   const isFullInfo = false;
+
+   const { data: extraMedia, isLoading } = useGetExtras(
+      mediaId,
+      mediaType,
+      isFullInfo,
+   );
 
    const tmdbImgPath = useTMDBImagePath();
    const backdrop = `${tmdbImgPath}${isMobile ? posterPath : backdropPath}`;
-   const mediaHref = `/${mediaType === "tv" ? "tvshow" : mediaType}/${id}`;
+
+   const mediaHref = `/${mediaType === "tv" ? "tvshow" : mediaType}/${mediaId}`;
 
    return (
       <div className="flex-1 min-h-[90vh] sm:min-h-screen relative flex flex-col justify-end bg-black lg:bg-[#010101]">
          <BackgroundImage
             src={backdrop}
             alt={title}
-            imageKey={id}
+            imageKey={mediaId}
             loadingText={t("loadingPoster")}
          />
 
          <div className="relative z-30 w-full px-4 sm:px-8 pt-16 sm:pt-20 lg:pt-24 pb-4 sm:pb-6 md:pb-8 flex flex-col-reverse sm:flex-row items-start sm:items-end justify-end sm:justify-between gap-4 sm:gap-10 mt-auto bg-linear-to-t from-black via-black/90 to-transparent sm:bg-none overflow-hidden">
             <div className="flex flex-col w-full">
                <MediaDetails
-                  id={id}
-                  title={title}
-                  rating={rating}
+                  id={mediaId}
                   mediaType={mediaType}
+                  media={extraMedia}
+                  isLoading={isLoading}
                >
                   {/* Library control buttons */}
                   <div className="flex gap-3 sm:gap-5 flex-wrap-reverse items-center">

@@ -1,9 +1,9 @@
-import { NormalizedMedia } from "@/entities/media";
+import { TrendingMedia } from "@/entities/media/model/types";
 import { HeroCarousel } from "@/widgets/hero-carousel";
 import { MediaCarousel } from "@/widgets/media-carousel";
 import { MediaGrid } from "@/widgets/media-grid";
 
-export function MainPage({ media }: { media: NormalizedMedia[] }) {
+export function MainPage({ media }: { media: TrendingMedia[] }) {
    return (
       <div>
          <HeroCarousel media={media.slice(0, 8)} />

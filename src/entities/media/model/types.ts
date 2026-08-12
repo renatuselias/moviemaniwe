@@ -1,86 +1,84 @@
-import { BaseMedia } from "@/shared/types";
+import {
+   ProductionCompany,
+   ProductionCountry,
+   TMDBVideo,
+   TMDBImage,
+   TMDBNetwork,
+} from "@/shared/types";
 
-interface MovieCast {
-   adult: boolean;
-   cast_id: number;
-   character: string;
-   credit_id: string;
-   gender: number;
-   id: number;
-   known_for_department: string;
-   name: string;
-   order: number;
-   original_name: string;
-   popularity: number;
-   profile_path: string;
-}
-
-export interface Movie extends BaseMedia {
-   media_type: "movie";
-   title: string;
-   original_title: string;
-   original_language: string;
-   release_date: string;
-   runtime: number;
-   adult: boolean;
-   video: boolean;
-   logo_path?: string;
-   production_countries?: { iso_3166_1: string; name: string }[];
-   production_companies?: {
-      id: number;
-      name: string;
-      logo_path: string | null;
-      origin_country: string;
-   }[];
-   budget?: number;
-   revenue?: number;
-   cast: MovieCast[];
-   trailerKey?: string;
-   backdrops?: { file_path: string }[];
-}
-
-export interface TvSeries extends BaseMedia {
-   media_type: "tv";
-   name: string;
-   first_air_date: string;
-   last_air_date?: string;
-   number_of_seasons: number;
-   number_of_episodes: number;
-   status: string;
-   seasons?: {
-      id: number;
-      season_number: number;
-      name: string;
-      overview: string;
-      air_date: string;
-      episode_count: number;
-   }[];
-   created_by?: {
-      id: number;
-      name: string;
-      profile_path: string | null;
-   }[];
-   production_countries?: { iso_3166_1: string; name: string }[];
-   production_companies?: {
-      id: number;
-      name: string;
-      logo_path: string | null;
-      origin_country: string;
-   }[];
-}
-
-export type MediaItem = Movie | TvSeries;
-
-export interface NormalizedMedia {
+export interface TrendingMedia {
    id: number;
    title: string;
-   releaseDate: string;
    posterPath: string | null;
    backdropPath: string | null;
-   voteAverage: number;
    mediaType: "movie" | "tv";
-   overview?: string;
+}
+
+interface MediaCast {
+   id: number;
+   name: string;
+   character: string;
+   profilePath: string | null;
+}
+
+interface CrewJob {
+   creditId?: string;
+   job: string;
+   episodeCount?: number;
+}
+
+export interface MediaCrew {
+   id: number;
+   name: string;
+   department?: string;
+   profile_path?: string;
+   job?: string; // movie
+   jobs?: CrewJob[]; // tv
+}
+
+export interface CreatedBy {
+   id: number;
+   name: string;
+   creditId?: string;
+   gender?: number;
+   profile_path?: string;
+}
+
+export interface MediaDetails {
+   id: number;
+   title: string;
+   posterPath: string;
+   backdropPath: string;
+   mediaType: "movie" | "tv";
+   logoPath: string;
    rating: number;
-   // cast?: CastMember[];
-   // trailerUrl?: string | null;
+   genres: { id: number; name: string }[];
+   cast: MediaCast[];
+   crew: MediaCrew[];
+   releaseDate: string; // first air on tv
+   lastAirDate: string;
+   homepage: string;
+   backdrops: TMDBImage[];
+   logos: TMDBImage[];
+   posters: TMDBImage[];
+   inProduction: boolean;
+   networks: TMDBNetwork[];
+   nextEpisodeToAir: {
+      air_date: string;
+      episode_number: number;
+      season_number: number;
+   };
+   numberOfSeasons: string;
+   productionCompanies: ProductionCompany[];
+   productionCountries: ProductionCountry[];
+   recommendations: [];
+   status: string;
+   tagline: string;
+   type: string; // tv
+   budget: number;
+   overview: string;
+   revenue: number;
+   runtime: number;
+   videos: TMDBVideo[];
+   createdBy: CreatedBy[];
 }

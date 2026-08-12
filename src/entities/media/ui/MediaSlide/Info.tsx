@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { Movie } from "../../model/types";
+import { MediaDetails } from "../../model/types";
 import { Button } from "@/shared/components/ui/button";
 import { formatDate } from "@/shared/lib/format";
 import { FormattedRuntime } from "@/shared/components";
@@ -10,32 +10,33 @@ import { CastList } from "./CastList";
 import { Link } from "@/i18n/navigation";
 
 interface MediaCardInfoProps {
-   movie: Movie;
+   media: MediaDetails;
    tmdbImgPath: string;
 }
 
-export function Info({ movie, tmdbImgPath }: MediaCardInfoProps) {
+export function Info({ media, tmdbImgPath }: MediaCardInfoProps) {
    return (
       <>
          <h2 className="text-white hover:text-zinc-300 font-semibold text-xl tracking-tighter truncate">
-            <Link href={`/movie/${movie.id}`}>{movie.title}</Link>
+            <Link href={`/movie/${media.id}`}>{media.title}</Link>
          </h2>
 
          <div className="flex items-center gap-2 text-sm text-zinc-400 tracking-tighter min-w-0">
-            <span className="shrink-0">{formatDate(movie.release_date)}</span>
+            <span className="shrink-0">{formatDate(media.releaseDate)}</span>
             <span className="text-white/20 shrink-0">|</span>
-
             <FormattedRuntime
-               runtime={movie.runtime}
+               runtime={media.runtime}
                className="shrink-0"
             />
             <span className="text-white/20 shrink-0">|</span>
-
-            <GenresList genreIds={movie.genre_ids} />
+            <GenresList
+               genreIds={media.genres.map((g: { id: number }) => g.id)}
+            />{" "}
          </div>
 
          <CastList
-            cast={movie.cast}
+            members={media.cast}
+            type="actors"
             tmdbImgPath={tmdbImgPath}
          />
 

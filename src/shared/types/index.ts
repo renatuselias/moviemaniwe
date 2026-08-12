@@ -12,7 +12,7 @@ export interface TMDBVideo {
       | "Clip"
       | "Featurette"
       | "Behind the Scenes"
-      | "Bolloper";
+      | "Bloopers";
    official: boolean;
    published_at: string;
 }
@@ -27,24 +27,42 @@ export interface TMDBImage {
    width: number;
 }
 
-export interface TMDBImages {
-   backdrops: TMDBImage[];
-   posters: TMDBImage[];
-   logos?: TMDBImage[];
+export interface ProductionCompany {
+   id: number;
+   name: string;
+   logo_path: string | null;
+   origin_country: string;
 }
 
-export interface BaseMedia {
-   id: number;
-   backdrop_path: string;
-   poster_path: string;
-   overview: string;
-   popularity: number;
-   vote_average: number;
-   vote_count: number;
-   genre_ids: number[];
-   genres: { id: number; name: string }[];
-   tagline?: string;
-   origin_country?: string[];
-   videos?: { results: TMDBVideo[] };
-   images?: TMDBImages;
+export interface ProductionCountry {
+   iso_3166_1: string;
+   name: string;
 }
+
+export interface TMDBNetwork {
+   id: number;
+   logo_path: string;
+   name: string;
+   origin_country: string;
+}
+
+interface TMDBBaseTrendingMedia {
+   id: number;
+   backdrop_path: string | null;
+   poster_path: string | null;
+}
+
+interface TMDBTrendingMovie extends TMDBBaseTrendingMedia {
+   media_type: "movie";
+   title: string;
+   original_title: string;
+}
+
+interface TMDBTrendingTV extends TMDBBaseTrendingMedia {
+   media_type: "tv";
+   name: string;
+   original_name: string;
+}
+
+export type TMDBTrendingMedia = TMDBTrendingMovie | TMDBTrendingTV;
+// | TMDBTrendingPerson;

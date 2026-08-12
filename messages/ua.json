@@ -43,7 +43,10 @@
    "mediaDetail": {
       "hour": "г",
       "minute": "хв",
-      "season": "{count, plural, =1 {# сезон} one {# сезон} few {# сезони} many {# сезонів} other {# сезонів}}"
+      "season": "{count, plural, =1 {# сезон} one {# сезон} few {# сезони} many {# сезонів} other {# сезонів}}",
+      "actors": "Актори",
+      "creators": "{count, plural, one {Творець} other {Творці}}",
+      "moreCrews": "та інші"
    },
    "genres": {
       "Action": "Бойовик",

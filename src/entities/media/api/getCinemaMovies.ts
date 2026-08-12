@@ -65,6 +65,10 @@ export async function getCinemaMovies() {
 
                return {
                   ...movie,
+                  videos,
+                  backdropPath: details?.backdrop_path,
+                  releaseDate: details?.release_date,
+                  genres: details?.genres,
                   runtime: details?.runtime ?? 0,
                   cast: details?.credits?.cast?.slice(0, 8) ?? [],
                   backdrops: details?.images?.backdrops?.slice(0, 5) ?? [],
