@@ -1,29 +1,38 @@
 "use client";
 
-import { MediaDetails } from "../../model/types";
+import { useMemo, useCallback } from "react";
 import { Media } from "./Media";
 import { Info } from "./Info";
+import { MediaDetails } from "../../model/types";
 
 interface MediaSlideProps {
    media: MediaDetails;
    tmdbImgPath: string;
+   onSelect: (media: MediaDetails) => void;
 }
 
-export function MediaSlide({ media, tmdbImgPath }: MediaSlideProps) {
+export function MediaSlide({ media, tmdbImgPath, onSelect }: MediaSlideProps) {
+   const handleSelect = useCallback(() => {
+      onSelect(media);
+   }, [media, onSelect]);
+
    const backdropUrl = media.backdropPath
       ? `${tmdbImgPath}${media.backdropPath}`
       : null;
 
-   const carouselImages = [
-      ...(media.backdrops?.map((b: { file_path: string }) => b.file_path) ||
-         []),
-   ]
-      .filter(Boolean)
-      .slice(0, 5) as string[];
+   const carouselImages = useMemo(() => {
+      return (media.backdrops || [])
+         .map((b) => b.file_path)
+         .filter(Boolean)
+         .slice(0, 5) as string[];
+   }, [media.backdrops]);
 
-   const trailerKey =
-      media.videos?.find((v) => v.type === "Trailer" && v.site === "YouTube")
-         ?.key || "";
+   const trailerKey = useMemo(() => {
+      return (
+         media.videos?.find((v) => v.type === "Trailer" && v.site === "YouTube")
+            ?.key || null
+      );
+   }, [media.videos]);
 
    return (
       <div className="group relative w-full flex flex-col gap-2">
@@ -31,13 +40,23 @@ export function MediaSlide({ media, tmdbImgPath }: MediaSlideProps) {
             title={media.title}
             backdropUrl={backdropUrl}
             carouselImages={carouselImages}
-            trailerKey={trailerKey}
+            trailerKey={media.trailerKey || trailerKey}
             tmdbImgPath={tmdbImgPath}
+            onClick={handleSelect}
          />
 
          <Info
-            media={media}
+            mediaId={media.id}
+            title={media.title}
+            mediaType={media.mediaType}
             tmdbImgPath={tmdbImgPath}
+            releaseDate={media.releaseDate}
+            runtime={media.runtime}
+            numberOfSeasons={media.numberOfSeasons}
+            genres={media.genres}
+            cast={media.cast}
+            rating={media.rating}
+            onClick={handleSelect}
          />
       </div>
    );

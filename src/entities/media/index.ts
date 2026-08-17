@@ -1,7 +1,6 @@
-export { useNowPlayingMovies } from "./model/useGetMedia";
-export { useGetExtras } from "./model/useGetMedia";
+export { useGetExtras } from "./model/useGetExtras";
 
-export { getTrendingMedia } from "./api/getTrendingMedia";
+export { getTrendingMedia } from "./api/get-trending-media";
 
 export { MediaDetails } from "./ui/MediaDetails";
 export { MediaCard } from "./ui/MediaCard";

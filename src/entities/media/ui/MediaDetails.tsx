@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { FormattedRuntime, StarRating } from "@/shared/components";
 import { formatDate } from "@/shared/lib/format";
 import { GenresList } from "./MediaSlide/GenresList";
-import { MediaDetails as MediaDetailsType } from "../model/types";
+import { MediaFullInfo as MediaDetailsType } from "../model/types";
 
 interface MediaDetailsProps {
    id: number;
@@ -99,9 +99,9 @@ export function MediaDetails({
                ) : (
                   <Link
                      href={mediaHref}
-                     className="block group w-fit"
+                     className="block group max-w-70 lg:max-w-100"
                   >
-                     <h1 className="text-2xl sm:text-3xl bg-linear-to-r from-zinc-100 via-zinc-400 to-zinc-600 bg-clip-text animate-shimmer hover:scale-102 lg:text-5xl font-bold text-white mb-4 sm:mb-8 lg:mb-12">
+                     <h1 className="text-2xl lg:text-3xl bg-linear-to-r from-zinc-100 via-zinc-400 to-zinc-600 bg-clip-text animate-shimmer hover:scale-102 font-bold text-white mb-4 sm:mb-8 lg:mb-12">
                         {title}
                      </h1>
                   </Link>
@@ -123,7 +123,7 @@ export function MediaDetails({
                   )}
 
                   {/* rating, release date, runtime, production countries */}
-                  <div className="flex items-center flex-wrap tracking-tighter gap-2 mb-3 sm:mb-4 font-medium drop-shadow-md text-sm cursor-default">
+                  <div className="flex items-center flex-wrap tracking-tighter gap-2 font-medium drop-shadow-md text-sm cursor-default">
                      {/* rating */}
                      {Number(rating) > 0 && (
                         <>

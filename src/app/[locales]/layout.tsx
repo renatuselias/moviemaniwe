@@ -36,11 +36,9 @@ export default async function RootLayout({
    const locale = await getLocale();
    const messages = await getMessages();
 
-   const htmlLang = locale === "ua" ? "uk" : locale;
-
    return (
       <html
-         lang={htmlLang}
+         lang={locale}
          className={cn(
             "h-full",
             "antialiased",

@@ -6,7 +6,7 @@ const HOVER_DELAY = 3800;
 const CAROUSEL_START_DELAY = 1500;
 
 interface UseMediaHoverProps {
-   trailerKey: string;
+   trailerKey: string | null;
 }
 
 export function useMediaHover({ trailerKey }: UseMediaHoverProps) {

@@ -46,23 +46,55 @@ export interface TMDBNetwork {
    origin_country: string;
 }
 
-interface TMDBBaseTrendingMedia {
+export interface TMDBMediaCast {
+   id: number;
+   name: string;
+   character: string;
+   profilePath: string | null;
+}
+
+interface TMDBCrewJob {
+   creditId?: string;
+   job: string;
+   episodeCount?: number;
+}
+
+export interface TMDBMediaCrew {
+   id: number;
+   name: string;
+   department?: string;
+   profile_path?: string;
+   job?: string; // movie
+   jobs?: TMDBCrewJob[]; // tv
+}
+
+export interface TMDBCreatedBy {
+   id: number;
+   name: string;
+   creditId?: string;
+   gender?: number;
+   profile_path?: string;
+}
+
+interface TMDBBaseMedia {
    id: number;
    backdrop_path: string | null;
    poster_path: string | null;
+   vote_average: number;
+   popularity: number;
 }
 
-interface TMDBTrendingMovie extends TMDBBaseTrendingMedia {
+interface TMDBMovie extends TMDBBaseMedia {
    media_type: "movie";
    title: string;
    original_title: string;
 }
 
-interface TMDBTrendingTV extends TMDBBaseTrendingMedia {
+interface TMDBTv extends TMDBBaseMedia {
    media_type: "tv";
    name: string;
    original_name: string;
 }
 
-export type TMDBTrendingMedia = TMDBTrendingMovie | TMDBTrendingTV;
+export type TMDBMedia = TMDBMovie | TMDBTv;
 // | TMDBTrendingPerson;

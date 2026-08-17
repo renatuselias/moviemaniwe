@@ -4,61 +4,37 @@ import {
    TMDBVideo,
    TMDBImage,
    TMDBNetwork,
+   TMDBMediaCast,
+   TMDBMediaCrew,
+   TMDBCreatedBy,
 } from "@/shared/types";
 
-export interface TrendingMedia {
+export interface BaseMedia {
    id: number;
+   mediaType: "movie" | "tv";
    title: string;
-   posterPath: string | null;
    backdropPath: string | null;
-   mediaType: "movie" | "tv";
+   posterPath: string | null;
+   rating?: number;
+   popularity?: number;
 }
 
-interface MediaCast {
-   id: number;
-   name: string;
-   character: string;
-   profilePath: string | null;
-}
-
-interface CrewJob {
-   creditId?: string;
-   job: string;
-   episodeCount?: number;
-}
-
-export interface MediaCrew {
-   id: number;
-   name: string;
-   department?: string;
-   profile_path?: string;
-   job?: string; // movie
-   jobs?: CrewJob[]; // tv
-}
-
-export interface CreatedBy {
-   id: number;
-   name: string;
-   creditId?: string;
-   gender?: number;
-   profile_path?: string;
-}
-
-export interface MediaDetails {
-   id: number;
-   title: string;
-   posterPath: string;
-   backdropPath: string;
-   mediaType: "movie" | "tv";
-   logoPath: string;
-   rating: number;
+export interface MediaDetails extends BaseMedia {
+   releaseDate: string;
+   videos: TMDBVideo[];
+   backdrops: TMDBImage[];
+   trailerKey: string | null;
+   numberOfSeasons: string;
+   cast: TMDBMediaCast[];
+   runtime: number;
    genres: { id: number; name: string }[];
-   cast: MediaCast[];
-   crew: MediaCrew[];
-   releaseDate: string; // first air on tv
+}
+
+export interface MediaFullInfo extends MediaDetails {
+   logoPath: string;
+   crew: TMDBMediaCrew[];
    lastAirDate: string;
    homepage: string;
-   backdrops: TMDBImage[];
    logos: TMDBImage[];
    posters: TMDBImage[];
    inProduction: boolean;
@@ -68,7 +44,6 @@ export interface MediaDetails {
       episode_number: number;
       season_number: number;
    };
-   numberOfSeasons: string;
    productionCompanies: ProductionCompany[];
    productionCountries: ProductionCountry[];
    recommendations: [];
@@ -78,7 +53,53 @@ export interface MediaDetails {
    budget: number;
    overview: string;
    revenue: number;
-   runtime: number;
-   videos: TMDBVideo[];
-   createdBy: CreatedBy[];
+   createdBy: TMDBCreatedBy[];
 }
+
+export interface FetchMediaParams {
+   endpoint?: string;
+   mediaType?: "movie" | "tv" | "all";
+   providerId?: number;
+   genreId?: number;
+   voteCountGte?: number;
+   withOriginalLanguage?: string;
+   withOriginCountry?: string;
+   withoutGenres?: string | number; // e.g. 16 or "16,10762"
+   releaseDateGte?: string;
+   releaseDateLte?: string;
+   sortBy?:
+      | "popularity.desc"
+      | "vote_average.desc"
+      | "primary_release_date.desc"
+      | "revenue.desc";
+   region?: string;
+   page?: number;
+   limit?: number;
+   isCarousel?: boolean;
+}
+
+type EndpointParams = {
+   endpoint: string;
+   genreId?: never;
+   providerId?: never;
+   sortBy?: never;
+   region?: never;
+   page?: never;
+};
+
+type DiscoverParams = {
+   endpoint?: never;
+   genreId?: number;
+   providerId?: number;
+   sortBy?: FetchMediaParams["sortBy"];
+   region?: string;
+   voteCountGte?: number;
+   page?: number;
+   releaseDateGte?: string;
+   releaseDateLte?: string;
+   withOriginalLanguage?: string;
+   withOriginCountry?: string;
+   withoutGenres?: string | number; // e.g. 16 or "16,10762"
+};
+
+export type MediaParams = EndpointParams | DiscoverParams;

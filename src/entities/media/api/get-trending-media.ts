@@ -2,7 +2,7 @@ import { tmdbFetch } from "@/shared/api/tmdb/tmdb-api";
 import { TMDB_LANGUAGES } from "@/shared/config/tmdb-languages";
 import { CacheConfig } from "@/shared/config/cache";
 import { getLocale } from "next-intl/server";
-import { TMDBTrendingMedia } from "@/shared/types";
+import { TMDBMedia } from "@/shared/types";
 
 export async function getTrendingMedia(timeWindow: "day" | "week" = "day") {
    const locale = await getLocale();
@@ -19,9 +19,9 @@ export async function getTrendingMedia(timeWindow: "day" | "week" = "day") {
    }
 
    // exclude persons (actor, directors, writers..)
-   const results = (data.results as TMDBTrendingMedia[])
+   const results = (data.results as TMDBMedia[])
       .filter(
-         (item): item is TMDBTrendingMedia =>
+         (item): item is TMDBMedia =>
             item?.media_type === "movie" || item?.media_type === "tv",
       )
       .map((media) => {

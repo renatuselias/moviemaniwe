@@ -4,6 +4,7 @@ import { tmdbFetch } from "@/shared/api/tmdb/tmdb-api";
 import { CacheConfig } from "@/shared/config/cache";
 import { TMDB_LANGUAGES } from "@/shared/config/tmdb-languages";
 import { getLocale } from "next-intl/server";
+import { findTrailerKey } from "../lib/find-trailer-key";
 
 export type MediaType = "movie" | "tv";
 
@@ -65,6 +66,8 @@ export async function getMediaDetails(
 
    const logoPath = details?.images?.logos?.[0]?.file_path || null;
 
+   const targetLang = language.split("-")[0];
+
    return {
       //...details,
       id: details?.id,
@@ -101,5 +104,6 @@ export async function getMediaDetails(
       posters: details?.images?.posters || [],
       createdBy: mediaType === "tv" ? details?.created_by : [],
       recommendations: recommendations?.results || [],
+      trailerKey: findTrailerKey(videos, targetLang),
    };
 }

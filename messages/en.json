@@ -81,5 +81,85 @@
       "addToWishlist": "Add to wishlist",
       "favorite": "In favorite list",
       "addToFavorite": "Add to favorite list"
+   },
+   "MainPage": {
+      "sections": {
+         "trending": {
+            "title": "Trending today",
+            "subtitle": "right now"
+         },
+         "inTheaters": {
+            "title": "In theaters",
+            "subtitle": "playing now"
+         },
+         "comedy": {
+            "title": "Time to laugh",
+            "subtitle": "Best comedies for a light evening"
+         },
+         "comingSoon": {
+            "title": "Upcoming",
+            "subtitle": "Coming soon to screens"
+         },
+         "onTheAir": {
+            "title": "On the Air",
+            "subtitle": "New episodes dropping weekly"
+         },
+         "actionAdventure": {
+            "title": "Action & Adventure",
+            "subtitle": "Non-stop adrenaline"
+         },
+         "mindGames": {
+            "title": "Mind Games",
+            "subtitle": "Twisted mysteries & thrillers"
+         },
+         "adrenalineRush": {
+            "title": "Adrenaline Rush",
+            "subtitle": "Twisted mysteries & thrillers"
+         },
+         "HBO_hits": {
+            "title": "HBO Hits",
+            "subtitle": "Must-watch HBO originals"
+         },
+         "Apple": {
+            "title": "Apple TV+ Originals",
+            "subtitle": "Premium series and award-winning movies"
+         },
+         "Netflix": {
+            "title": "Netflix Originals",
+            "subtitle": "Made for binge-watching"
+         },
+         "EdgeOfYourSeatTV": {
+            "title": "Edge-of-Your-Seat TV",
+            "subtitle": "Gripping thrillers and crime mysteries"
+         },
+         "HeartWrenchingStories": {
+            "title": "Heart-Wrenching Stories",
+            "subtitle": "Deep, acclaimed dramas that linger"
+         },
+         "Family": {
+            "title": "Family Movie Night",
+            "subtitle": "Good vibes for kids and parents"
+         },
+         "TimeCapsule": {
+            "title": "Time Capsule: 1990",
+            "subtitle": "Underrated cinema gems of the year"
+         },
+         "BoxOffice": {
+            "title": "All-Time Box Office",
+            "subtitle": "The highest-grossing movies in cinema history"
+         },
+         "TopRated": {
+            "title": "Top Rated",
+            "subtitle": "All-time fan favorites and masterpieces"
+         },
+         "popularInCountry": {
+            "title": "Popular: {country}",
+            "subtitle": "Top hits in your region"
+         },
+         "localLegends": {
+            "title": "Local Legends",
+            "subtitle": "{countryGenitive}'s Finest Cinema"
+         }
+      }
    }
 }

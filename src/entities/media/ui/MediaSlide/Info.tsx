@@ -1,49 +1,104 @@
 "use client";
 
+import { memo, useMemo } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { MediaDetails } from "../../model/types";
 import { Button } from "@/shared/components/ui/button";
 import { formatDate } from "@/shared/lib/format";
-import { FormattedRuntime } from "@/shared/components";
+import { FormattedRuntime, StarRating } from "@/shared/components";
 import { GenresList } from "./GenresList";
 import { CastList } from "./CastList";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import { TMDBMediaCast } from "@/shared/types";
 
 interface MediaCardInfoProps {
-   media: MediaDetails;
+   mediaId: number;
+   title: string;
+   releaseDate: string;
+   runtime: number;
+   numberOfSeasons: string;
+   genres: { id: number; name: string }[];
+   cast: TMDBMediaCast[];
+   mediaType: "movie" | "tv";
    tmdbImgPath: string;
+   rating?: number;
+   onClick: () => void;
 }
 
-export function Info({ media, tmdbImgPath }: MediaCardInfoProps) {
-   return (
-      <>
-         <h2 className="text-white hover:text-zinc-300 font-semibold text-xl tracking-tighter truncate">
-            <Link href={`/movie/${media.id}`}>{media.title}</Link>
-         </h2>
+export const Info = memo(
+   function Info({
+      mediaId,
+      title,
+      releaseDate,
+      runtime,
+      numberOfSeasons,
+      genres = [],
+      cast = [],
+      mediaType,
+      tmdbImgPath,
+      rating,
+      onClick,
+   }: MediaCardInfoProps) {
+      const t = useTranslations();
 
-         <div className="flex items-center gap-2 text-sm text-zinc-400 tracking-tighter min-w-0">
-            <span className="shrink-0">{formatDate(media.releaseDate)}</span>
-            <span className="text-white/20 shrink-0">|</span>
-            <FormattedRuntime
-               runtime={media.runtime}
-               className="shrink-0"
+      const genreIds = useMemo(() => genres.map((g) => g.id), [genres]);
+
+      const formattedDate = useMemo(
+         () => formatDate(releaseDate),
+         [releaseDate],
+      );
+
+      return (
+         <>
+            <h2 className="text-white hover:text-zinc-300 font-semibold text-xl tracking-tighter truncate">
+               <Link href={`/movie/${mediaId}`}>{title}</Link>
+            </h2>
+
+            <div className="flex items-center gap-2 text-sm text-zinc-400 tracking-tighter min-w-0">
+               <StarRating text={`${rating && Number(rating).toFixed(1)}`} />
+               <span className="text-white/20 shrink-0">|</span>
+               <span className="shrink-0">{formattedDate}</span>
+               <span className="text-white/20 shrink-0">|</span>
+               {mediaType === "tv" ? (
+                  <span>
+                     {t("mediaDetail.season", {
+                        count: numberOfSeasons,
+                     })}
+                  </span>
+               ) : (
+                  <FormattedRuntime
+                     runtime={runtime}
+                     className="shrink-0"
+                  />
+               )}
+            </div>
+            <GenresList genreIds={genreIds} />
+
+            <CastList
+               members={cast}
+               type="actors"
+               tmdbImgPath={tmdbImgPath}
             />
-            <span className="text-white/20 shrink-0">|</span>
-            <GenresList
-               genreIds={media.genres.map((g: { id: number }) => g.id)}
-            />{" "}
-         </div>
 
-         <CastList
-            members={media.cast}
-            type="actors"
-            tmdbImgPath={tmdbImgPath}
-         />
-
-         <Button className="px-0! py-0! h-fit! rounded-none! bg-transparent! cursor-pointer group/link mt-2 flex w-fit items-center gap-1 font-manrope text-[14.5px] text-white/70 underline underline-offset-4 decoration-white/30 transition-colors hover:text-white hover:decoration-white/60">
-            Details
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
-         </Button>
-      </>
-   );
-}
+            <Button
+               onClick={onClick}
+               className="px-0! py-0! h-fit! rounded-none! bg-transparent! cursor-pointer group/link mt-2 flex w-fit items-center gap-1 font-manrope text-[14.5px] text-white/70 underline underline-offset-4 decoration-white/30 transition-colors hover:text-white hover:decoration-white/60"
+            >
+               Details
+               <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+            </Button>
+         </>
+      );
+   },
+   (prevProps, nextProps) => {
+      return (
+         prevProps.mediaId === nextProps.mediaId &&
+         prevProps.title === nextProps.title &&
+         prevProps.releaseDate === nextProps.releaseDate &&
+         prevProps.runtime === nextProps.runtime &&
+         prevProps.tmdbImgPath === nextProps.tmdbImgPath &&
+         prevProps.genres === nextProps.genres &&
+         prevProps.cast === nextProps.cast
+      );
+   },
+);
