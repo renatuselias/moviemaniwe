@@ -193,7 +193,7 @@ export function MediaDetails({
 export async function getImageLuminance(url: string): Promise<number> {
    return new Promise((resolve) => {
       const img = new Image();
-      img.crossOrigin = "Anonymous"; // Требует CORS со стороны сервера (TMDB поддерживает)
+      img.crossOrigin = "Anonymous";
       img.src = url;
 
       img.onload = () => {
