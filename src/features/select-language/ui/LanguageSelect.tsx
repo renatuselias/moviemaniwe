@@ -13,7 +13,7 @@ import {
 } from "@/shared/components/ui/select";
 import { Globe } from "lucide-react";
 import { languageNames } from "@/i18n/routing";
-import { useLanguage } from "../model/useLanguage";
+import { useLanguage } from "../lib/use-language";
 
 export function LanguageSelect() {
    const { currentLocale, changeLanguage } = useLanguage();

@@ -1,16 +1,20 @@
 import { Link } from "@/i18n/navigation";
-import { MOVIE_GENRES } from "@/shared/config/tmdb-genres";
+import { ALL_GENRES } from "@/shared/config/tmdb-genres";
 import { useTranslations } from "next-intl";
 
 interface MediaGenresListProps {
    genreIds: number[];
+   isCard?: boolean;
 }
 
-export function GenresList({ genreIds = [] }: MediaGenresListProps) {
+export function GenresList({
+   genreIds = [],
+   isCard = false,
+}: MediaGenresListProps) {
    const t = useTranslations();
 
    const validGenres = genreIds
-      .map((id) => ({ id, key: MOVIE_GENRES[id] }))
+      .map((id) => ({ id, key: ALL_GENRES[id] }))
       .filter((g): g is { id: number; key: string } => Boolean(g.key));
 
    if (!validGenres.length) return null;
@@ -24,12 +28,16 @@ export function GenresList({ genreIds = [] }: MediaGenresListProps) {
                   key={genre.id}
                   className="inline"
                >
-                  <Link
-                     href={`/genre/${genre.id}`}
-                     className="hover:underline hover:text-white transition-colors"
-                  >
-                     {t(`genres.${genre.key}`)}
-                  </Link>
+                  {!isCard ? (
+                     <Link
+                        href={`/genre/${genre.id}`}
+                        className="hover:underline hover:text-white transition-colors"
+                     >
+                        {t(`genres.${genre.key}`)}
+                     </Link>
+                  ) : (
+                     <span> {t(`genres.${genre.key}`)}</span>
+                  )}
                   {!isLast && <span className="mr-1">,</span>}
                </span>
             );

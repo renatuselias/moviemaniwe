@@ -1,3 +1,5 @@
+"use server";
+
 import { tmdbFetch } from "@/shared/api/tmdb/tmdb-api";
 import { TMDB_LANGUAGES } from "@/shared/config/tmdb-languages";
 import { CacheConfig } from "@/shared/config/cache";
@@ -27,11 +29,13 @@ export async function getTrendingMedia(timeWindow: "day" | "week" = "day") {
       .map((media) => {
          const isMovie = media.media_type === "movie";
          return {
+            ...media,
             id: media.id,
             mediaType: media.media_type,
             title: (isMovie ? media.title : media.name) ?? "No name",
             backdropPath: media.backdrop_path,
             posterPath: media.poster_path,
+            rating: media.vote_average,
          };
       });
 

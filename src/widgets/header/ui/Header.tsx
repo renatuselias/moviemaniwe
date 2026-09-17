@@ -27,7 +27,7 @@ export async function Header() {
                   className="text-zinc-700
                   h-4 w-4 max-[350px]:h-5 max-[350px]:w-5"
                />
-               <span className="hidden min-[350px]:block select-none">
+               <span className="tracking-wide hidden min-[350px]:block select-none">
                   search
                </span>
             </button>

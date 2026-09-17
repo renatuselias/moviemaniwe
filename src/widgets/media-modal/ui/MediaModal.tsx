@@ -2,14 +2,15 @@
 
 import { useEffect, useRef, useMemo } from "react";
 import { Dialog, DialogContent } from "@/shared/components/ui/dialog";
-import { MediaDetails, useGetExtras } from "@/entities/media";
+import { useGetExtras } from "@/entities/media";
 import { useTMDBImagePath } from "@/shared/lib/hooks/useTMDBImagePath";
 import { BackgroundImage } from "@/shared/components";
 import { LibraryControlButtons } from "@/features/library-controls";
-import { CastList } from "@/entities/media/ui/MediaSlide/CastList";
-import { getTopCreators } from "@/entities/media/model/useGetMediaCreators";
-import { Textarea } from "@/shared/components/ui/textarea";
+import { CastList } from "@/entities/media";
+import { getTopCreators } from "@/entities/media";
 import { Skeleton } from "@/shared/components/ui/skeleton";
+import { MediaDetails } from "@/widgets/media-details";
+import { useTranslations } from "next-intl";
 
 interface MediaModalProps {
    mediaId: number;
@@ -24,6 +25,7 @@ export function MediaModal({
    initialData,
    onClose,
 }: MediaModalProps) {
+   const t = useTranslations("mediaDetail");
    const tmdbImagePath = useTMDBImagePath();
 
    const contentRef = useRef<HTMLDivElement>(null);
@@ -64,7 +66,12 @@ export function MediaModal({
             className="fixed top-1/2 left-1/2! -translate-x-1/2! -translate-y-1/2! w-[90vw]! max-w-[90vw]! lg:w-240! lg:max-w-240! max-h-[90dvh] overflow-y-auto bg-black! border-0! shadow-none! ring-0! outline-none! focus:outline-none! focus-visible:outline-none! rounded-none! px-0! py-0! pb-10! sm:pb-20!"
          >
             <div className="flex flex-col relative w-full bg-black">
-               {backGroundSrc && (
+               {isLoading ? (
+                  <Skeleton
+                     className="w-full aspect-video bg-black"
+                     aria-hidden="true"
+                  />
+               ) : (
                   <BackgroundImage
                      src={backGroundSrc}
                      alt={title}
@@ -74,7 +81,7 @@ export function MediaModal({
                )}
 
                <div
-                  className={`relative z-20 px-7 md:px-20 text-white bg-transparent flex flex-col gap-5 ${backGroundSrc ? "-mt-6 md:-mt-50" : "mt-10 sm:mt-20"}`}
+                  className={`relative z-20 px-7 md:px-20 text-white bg-transparent flex flex-col gap-5 ${backGroundSrc || isLoading ? "-mt-6 md:-mt-50" : "mt-10 sm:mt-20"}`}
                >
                   <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-12 lg:items-end">
                      <div className="lg:col-span-8 xl:col-span-9">
@@ -104,20 +111,24 @@ export function MediaModal({
                      </div>
                   </div>
 
-                  <div className="flex flex-col gap-2">
-                     <h2 className="text-[18px] text-zinc-300">Overview</h2>
-                     {isLoading ? (
-                        <div className="flex flex-col gap-2">
-                           <Skeleton className="w-full h-5 rounded-sm!" />
-                           <Skeleton className="w-full h-5 rounded-sm!" />
-                           <Skeleton className="w-3/4 h-5 rounded-sm!" />
-                        </div>
-                     ) : (
-                        <p className="text-zinc-400 text-[16px]! tracking-wide">
-                           {extraMedia?.overview}
-                        </p>
-                     )}
-                  </div>
+                  {extraMedia?.overview && (
+                     <div className="flex flex-col gap-2">
+                        <h2 className="text-[18px] text-zinc-300">
+                           {t("overview")}
+                        </h2>
+                        {isLoading ? (
+                           <div className="flex flex-col gap-2">
+                              <Skeleton className="w-full h-4" />
+                              <Skeleton className="w-full h-4" />
+                              <Skeleton className="w-3/4 h-4" />
+                           </div>
+                        ) : (
+                           <p className="text-zinc-400 text-[16px]! tracking-wide line-clamp-3">
+                              {extraMedia?.overview}
+                           </p>
+                        )}
+                     </div>
+                  )}
 
                   <CastList
                      members={creators}

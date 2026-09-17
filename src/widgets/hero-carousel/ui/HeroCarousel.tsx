@@ -5,12 +5,13 @@ import { useTranslations } from "next-intl";
 import { useIsMobile } from "@/shared/lib/hooks/useWindowSize";
 import { useTMDBImagePath } from "@/shared/lib/hooks/useTMDBImagePath";
 import { BackgroundImage } from "@/shared/components";
-import { MediaDetails, useGetExtras } from "@/entities/media";
+import { useGetExtras } from "@/entities/media";
 import { CarouselNavigation } from "./CarouselNavigation";
 import { LibraryControlButtons } from "@/features/library-controls";
 import { Link } from "@/i18n/navigation";
 import { InfoIcon } from "lucide-react";
-import { BaseMedia } from "@/entities/media/model/types";
+import { BaseMedia } from "@/entities/media";
+import { MediaDetails } from "@/widgets/media-details";
 
 export function HeroCarousel({ media }: { media: BaseMedia[] }) {
    const t = useTranslations("loaders");
@@ -71,7 +72,12 @@ export function HeroCarousel({ media }: { media: BaseMedia[] }) {
             loadingText={t("loadingPoster")}
          />
 
-         <div className="relative z-30 w-full px-4 sm:px-8 pt-16 sm:pt-20 lg:pt-24 pb-4 sm:pb-6 md:pb-8 flex flex-col-reverse sm:flex-row items-start sm:items-end justify-end sm:justify-between gap-4 sm:gap-10 mt-auto bg-linear-to-t from-black via-black/90 to-transparent sm:bg-none overflow-hidden">
+         <div
+            className="relative z-30 w-full
+               px-4 sm:px-8 pt-20 lg:pt-24 pb-4 sm:pb-6 md:pb-8 
+               flex flex-col-reverse sm:flex-row items-start sm:items-end justify-end sm:justify-between gap-4 sm:gap-10 
+               mt-auto bg-linear-to-t from-black via-black/90 to-transparent sm:bg-none overflow-hidden"
+         >
             <div className="flex flex-col w-full">
                <MediaDetails
                   id={mediaId}

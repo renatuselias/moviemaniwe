@@ -7,6 +7,7 @@ import {
    TMDBMediaCast,
    TMDBMediaCrew,
    TMDBCreatedBy,
+   TMDBMediaStatus,
 } from "@/shared/types";
 
 export interface BaseMedia {
@@ -47,7 +48,7 @@ export interface MediaFullInfo extends MediaDetails {
    productionCompanies: ProductionCompany[];
    productionCountries: ProductionCountry[];
    recommendations: [];
-   status: string;
+   status: TMDBMediaStatus;
    tagline: string;
    type: string; // tv
    budget: number;

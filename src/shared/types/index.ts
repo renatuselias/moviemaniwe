@@ -50,7 +50,7 @@ export interface TMDBMediaCast {
    id: number;
    name: string;
    character: string;
-   profilePath: string | null;
+   profile_path: string | null;
 }
 
 interface TMDBCrewJob {
@@ -74,6 +74,7 @@ export interface TMDBCreatedBy {
    creditId?: string;
    gender?: number;
    profile_path?: string;
+   job?: string;
 }
 
 interface TMDBBaseMedia {
@@ -98,3 +99,21 @@ interface TMDBTv extends TMDBBaseMedia {
 
 export type TMDBMedia = TMDBMovie | TMDBTv;
 // | TMDBTrendingPerson;
+
+type TMDBMovieStatus =
+   | "Rumored"
+   | "Planned"
+   | "In Production"
+   | "Post Production"
+   | "Released"
+   | "Canceled";
+
+type TMDBTVStatus =
+   | "Planned"
+   | "In Production"
+   | "Returning Series"
+   | "Ended"
+   | "Canceled"
+   | "Pilot";
+
+export type TMDBMediaStatus = TMDBMovieStatus | TMDBTVStatus;

@@ -3,7 +3,7 @@
 import { useMemo, useCallback } from "react";
 import { Media } from "./Media";
 import { Info } from "./Info";
-import { MediaDetails } from "../../model/types";
+import { MediaDetails } from "@/entities/media";
 
 interface MediaSlideProps {
    media: MediaDetails;
@@ -41,7 +41,6 @@ export function MediaSlide({ media, tmdbImgPath, onSelect }: MediaSlideProps) {
             backdropUrl={backdropUrl}
             carouselImages={carouselImages}
             trailerKey={media.trailerKey || trailerKey}
-            tmdbImgPath={tmdbImgPath}
             onClick={handleSelect}
          />
 

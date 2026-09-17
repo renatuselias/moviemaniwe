@@ -1,7 +1,20 @@
-export { useGetExtras } from "./model/useGetExtras";
+export { getMediaDetails } from "./api/get-media-details";
+
+export { getTopCreators } from "./model/use-get-creators";
+
+export { useMedia } from "./model/use-get-media";
+
+export { CastList } from "./ui/CastList";
+export { GenresList } from "./ui/GenresList";
+
+export { useGetExtras } from "./model/use-get-extras";
 
 export { getTrendingMedia } from "./api/get-trending-media";
 
-export { MediaDetails } from "./ui/MediaDetails";
 export { MediaCard } from "./ui/MediaCard";
-export { MediaSlide } from "./ui/MediaSlide/MediaSlide";
+export type {
+   MediaFullInfo,
+   MediaDetails,
+   MediaParams,
+   BaseMedia,
+} from "./model/types";

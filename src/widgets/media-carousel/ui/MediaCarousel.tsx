@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
-import { MediaSlide } from "@/entities/media";
 import { ContentTitle } from "@/shared/components";
 import { useTMDBImagePath } from "@/shared/lib/hooks/useTMDBImagePath";
 import {
@@ -14,9 +13,10 @@ import {
    CarouselPrevious,
 } from "@/shared/components/ui/carousel";
 import { Skeleton } from "@/shared/components/ui/skeleton";
-import { MediaDetails, MediaParams } from "@/entities/media/model/types";
+import { MediaDetails, MediaParams } from "@/entities/media";
 import { MediaModal } from "@/widgets/media-modal";
-import { useMedia } from "@/entities/media/model/useMedia";
+import { useMedia } from "@/entities/media";
+import { MediaSlide } from "./MediaSlide/MediaSlide";
 
 export interface MediaCarouselProps {
    title: string;
@@ -76,20 +76,22 @@ export function MediaCarousel({
                      <Skeleton className="w-full aspect-5/3" />
 
                      {/* Name */}
-                     <Skeleton className="w-1/2 h-5 rounded-sm!" />
+                     <Skeleton className="w-1/2 h-5" />
 
                      {/* Info */}
                      <div className="flex gap-2 items-center">
-                        <Skeleton className="w-9 h-4 rounded-sm!" />
+                        <Skeleton className="w-9 h-4" />
                         <span className="text-white/20 shrink-0">|</span>
-                        <Skeleton className="w-12 h-4 rounded-sm!" />
+                        <Skeleton className="w-12 h-4" />
                         <span className="text-white/20 shrink-0">|</span>
-                        <Skeleton className="w-2/5 h-5 rounded-sm!" />
+                        <Skeleton className="w-14 h-4" />
                      </div>
+
+                     <Skeleton className="w-60 h-4" />
 
                      {/* Cast */}
                      <div className="flex gap-3 items-center">
-                        <Skeleton className="w-12 h-4 rounded-sm!" />
+                        <Skeleton className="w-12 h-4" />
                         <div className="flex -space-x-0.5">
                            {Array.from({ length: 5 }).map((_, index) => (
                               <Skeleton
@@ -103,10 +105,10 @@ export function MediaCarousel({
                            ))}
                         </div>
 
-                        <Skeleton className="w-2/5 h-5 rounded-sm!" />
+                        <Skeleton className="w-2/5 h-5" />
                      </div>
 
-                     <Skeleton className="w-20 h-5 rounded-sm!" />
+                     <Skeleton className="w-20 h-5" />
                   </div>
                ))}
             </div>

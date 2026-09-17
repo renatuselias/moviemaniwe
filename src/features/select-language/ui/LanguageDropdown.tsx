@@ -10,7 +10,7 @@ import {
 import { Globe2, Check } from "lucide-react";
 import { routing, languageNames } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { useLanguage } from "@/features/select-language/model/useLanguage";
+import { useLanguage } from "@/features/select-language/lib/use-language";
 
 export function LanguageDropdown() {
    const t = useTranslations("menu");

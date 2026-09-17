@@ -112,7 +112,7 @@ export function BackgroundImage({
                   )}
                </motion.div>
             </AnimatePresence>
-
+            <div className="absolute inset-0 bg-linear-to-l from-black/60 via-transparent to-transparent z-20 pointer-events-none" />
             <div className="absolute inset-x-0 -bottom-0.5 h-[calc(75%+2px)] bg-linear-to-t from-black via-black/90 via-30% to-transparent z-20 pointer-events-none scale-[1.01] transform-gpu" />
             <div className="absolute inset-0 bg-linear-to-r from-black/60 via-transparent to-transparent z-20 pointer-events-none" />
          </div>

@@ -17,7 +17,7 @@ export function FormattedRuntime({
 
    const formattedString =
       hour > 0
-         ? `${hour}${t("mediaDetail.hour")} ${minute}${t("mediaDetail.minute")}`
+         ? `${hour}${t("mediaDetail.hour")} ${minute > 0 ? `${minute}${t("mediaDetail.minute")}` : ""}`
          : `${minute}${t("mediaDetail.minute")}`;
 
    return <span className={className}>{formattedString}</span>;

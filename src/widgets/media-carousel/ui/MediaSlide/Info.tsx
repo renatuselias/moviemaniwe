@@ -3,15 +3,14 @@
 import { memo, useMemo } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import { formatDate } from "@/shared/lib/format";
 import { FormattedRuntime, StarRating } from "@/shared/components";
-import { GenresList } from "./GenresList";
-import { CastList } from "./CastList";
 import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { TMDBMediaCast } from "@/shared/types";
+import { formatDate } from "@/shared/lib/format";
+import { CastList, GenresList } from "@/entities/media";
 
-interface MediaCardInfoProps {
+interface SlideInfoProps {
    mediaId: number;
    title: string;
    releaseDate: string;
@@ -38,14 +37,15 @@ export const Info = memo(
       tmdbImgPath,
       rating,
       onClick,
-   }: MediaCardInfoProps) {
+   }: SlideInfoProps) {
       const t = useTranslations();
+      const currentLocale = useLocale();
 
       const genreIds = useMemo(() => genres.map((g) => g.id), [genres]);
 
-      const formattedDate = useMemo(
-         () => formatDate(releaseDate),
-         [releaseDate],
+      const date = useMemo(
+         () => formatDate(releaseDate, "yearOnly", currentLocale),
+         [releaseDate, currentLocale],
       );
 
       return (
@@ -57,7 +57,7 @@ export const Info = memo(
             <div className="flex items-center gap-2 text-sm text-zinc-400 tracking-tighter min-w-0">
                <StarRating text={`${rating && Number(rating).toFixed(1)}`} />
                <span className="text-white/20 shrink-0">|</span>
-               <span className="shrink-0">{formattedDate}</span>
+               <span className="shrink-0">{date}</span>
                <span className="text-white/20 shrink-0">|</span>
                {mediaType === "tv" ? (
                   <span>
@@ -84,7 +84,7 @@ export const Info = memo(
                onClick={onClick}
                className="px-0! py-0! h-fit! rounded-none! bg-transparent! cursor-pointer group/link mt-2 flex w-fit items-center gap-1 font-manrope text-[14.5px] text-white/70 underline underline-offset-4 decoration-white/30 transition-colors hover:text-white hover:decoration-white/60"
             >
-               Details
+               {t("mediaDetail.details")}
                <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
             </Button>
          </>

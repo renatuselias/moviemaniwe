@@ -17,7 +17,7 @@ import {
 import { Button } from "@/shared/components/ui/button";
 import { FieldInput } from "./FieldInput";
 import SocialAuth from "./SocialButtons/SocialAuth";
-import { useAuthActions } from "../model/useAuthActions";
+import { useAuthActions } from "../model/use-auth-actions";
 import styles from "./SocialButtons/SocialAuthButton.module.css";
 import { useTranslations } from "next-intl";
 

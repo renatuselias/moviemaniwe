@@ -1,4 +1,4 @@
-import { BaseMedia } from "@/entities/media/model/types";
+import { BaseMedia } from "@/entities/media";
 import { cn } from "@/shared/lib/utils";
 
 interface CarouselNavigationProps {

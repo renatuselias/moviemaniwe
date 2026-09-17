@@ -1,6 +1,6 @@
-import { CreatedBy, MediaCrew } from "./types";
+import { TMDBCreatedBy, TMDBMediaCrew } from "@/shared/types";
 
-const hasJob = (person: MediaCrew, jobNames: string[]): boolean => {
+const hasJob = (person: TMDBMediaCrew, jobNames: string[]): boolean => {
    if (person.job && jobNames.includes(person.job)) {
       return true;
    }
@@ -12,19 +12,20 @@ const hasJob = (person: MediaCrew, jobNames: string[]): boolean => {
 
 export function getTopCreators(
    mediaType: "movie" | "tv",
-   createdBy?: CreatedBy[],
-   crew: MediaCrew[] = [],
+   createdBy?: TMDBCreatedBy[],
+   crew: TMDBMediaCrew[] = [],
    limit = 3,
-): CreatedBy[] {
+): TMDBCreatedBy[] {
    // TV completed list created_by
    if (mediaType === "tv" && createdBy && createdBy.length > 0) {
       return createdBy.slice(0, limit);
    }
 
-   const mapCrewToCreator = (person: MediaCrew): CreatedBy => ({
+   const mapCrewToCreator = (person: TMDBMediaCrew): TMDBCreatedBy => ({
       id: person.id,
       name: person.name,
-      profile_path: person.profile_path, 
+      profile_path: person.profile_path,
+      job: person.job,
    });
 
    if (mediaType === "movie") {

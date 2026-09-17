@@ -1,17 +1,16 @@
 "use client";
 
-import { useState, memo, useMemo } from "react";
-import Image from "next/image";
+import { memo, useMemo } from "react";
 import { Film, Volume2, VolumeX } from "lucide-react";
 import { Skeleton } from "@/shared/components/ui/skeleton";
-import { useMediaHover } from "../../model/use-media-hover";
+import { TmdbImage } from "@/shared/components";
+import { useMediaHover } from "../../lib/use-media-hover";
 
-interface MediaCardMediaProps {
+interface SlideMediaProps {
    title: string;
    backdropUrl: string | null;
    carouselImages: string[];
    trailerKey: string | null;
-   tmdbImgPath: string;
    onClick: () => void;
 }
 
@@ -21,11 +20,8 @@ export const Media = memo(
       backdropUrl,
       carouselImages = [],
       trailerKey,
-      tmdbImgPath,
       onClick,
-   }: MediaCardMediaProps) {
-      const [isLoaded, setIsLoaded] = useState(false);
-
+   }: SlideMediaProps) {
       const {
          isHovered,
          showCarousel,
@@ -58,25 +54,23 @@ export const Media = memo(
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
          >
-            {!isLoaded && backdropUrl && (
-               <Skeleton className="absolute inset-0 z-10 h-full w-full rounded-none bg-zinc-900" />
-            )}
-
             {backdropUrl ? (
-               <Image
-                  src={backdropUrl}
-                  alt={title || "Movie Backdrop"}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  onLoad={() => setIsLoaded(true)}
-                  className={`object-cover transition-all duration-700 ease-in-out ${
-                     isLoaded ? "opacity-100" : "opacity-0"
-                  } ${
-                     isHovered && !showTrailer
-                        ? "scale-105 brightness-40"
-                        : "group-hover:scale-105"
-                  }`}
-               />
+               <>
+                  <Skeleton className="absolute inset-0 h-full w-full rounded-none bg-zinc-900 z-0" />
+
+                  <TmdbImage
+                     src={backdropUrl}
+                     alt={title || "Movie Backdrop"}
+                     fill
+                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                     fadeDuration={900}
+                     className={`object-cover transition-[transform,filter] duration-700 ease-in-out z-10 ${
+                        isHovered && !showTrailer
+                           ? "scale-105 brightness-40"
+                           : "group-hover:scale-105"
+                     }`}
+                  />
+               </>
             ) : (
                <div className="flex h-full w-full items-center justify-center text-zinc-600">
                   <Film className="h-10 w-10" />
@@ -96,12 +90,10 @@ export const Media = memo(
                            key={`${imgPath}-${idx}`}
                            className="relative aspect-video w-full shrink-0 overflow-hidden"
                         >
-                           <Image
-                              src={`${tmdbImgPath}${imgPath}`}
+                           <TmdbImage
+                              src={imgPath}
                               alt="Carousel frame"
                               fill
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                              className="object-cover"
                            />
                         </div>
                      ))}
@@ -191,7 +183,6 @@ export const Media = memo(
          prev.title === next.title &&
          prev.backdropUrl === next.backdropUrl &&
          prev.trailerKey === next.trailerKey &&
-         prev.tmdbImgPath === next.tmdbImgPath &&
          prev.carouselImages === next.carouselImages
       );
    },

@@ -253,6 +253,7 @@ li:hover {
 
 /* END animation for navigation progress bar */
 
+/* Slider media animation */
 @keyframes verticalMarquee {
    0% {
       transform: translate3d(0, 0%, 0);
@@ -266,3 +267,5 @@ li:hover {
    animation: verticalMarquee 3s linear infinite;
    will-change: transform;
 }
+
+/* END Slider media animation */

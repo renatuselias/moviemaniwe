@@ -4,7 +4,7 @@ import {
    getLanguageByCountry,
    getUserCountryCode,
 } from "@/shared/lib/geo";
-import { BaseMedia } from "@/entities/media/model/types";
+import { BaseMedia } from "@/entities/media";
 import { getUpcomingDates } from "@/shared/lib/format";
 import { HeroCarousel } from "@/widgets/hero-carousel";
 import { MediaCarousel } from "@/widgets/media-carousel";
@@ -27,7 +27,7 @@ export async function MainPage({ media }: { media: BaseMedia[] }) {
    return (
       <div>
          <HeroCarousel media={media.slice(0, 8)} />
-         <div className="mt-20 max-w-375 px-4 sm:px-8 m-auto flex flex-col gap-20 sm:gap-40">
+         <div className="mt-20 px-4 sm:px-16 m-auto flex flex-col gap-20 sm:gap-40">
             <MediaGrid
                media={media}
                title={t("trending.title")}

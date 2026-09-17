@@ -19,7 +19,7 @@ export function AuthModal() {
          onOpenChange={setOpen}
       >
          <DialogTrigger
-            className="border rounded-sm py-1! px-1.5
+            className="border tracking-wider rounded-sm py-1! px-1.5
          cursor-pointer font-medium transition-colors!
          bg-linear-to-r from-zinc-100 via-zinc-400 to-zinc-600 bg-clip-text text-transparent animate-shimmer"
          >
